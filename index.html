@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>あかりごはん</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #f5f0e8;
+    --warm: #e8dcc8;
+    --ink: #2c2016;
+    --rust: #c4622d;
+    --season-color: #c4622d;
+  }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: 'Noto Serif JP', serif;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse at 20% 20%, rgba(196,98,45,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(107,124,92,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+  }
+
+  header { text-align: center; margin-bottom: 48px; }
+
+  .season-badge {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--season-color);
+    border: 1px solid var(--season-color);
+    padding: 4px 16px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(36px, 8vw, 52px);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+    animation: fadeUp 0.6s ease 0.1s both;
+  }
+
+  h1 span {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    color: var(--rust);
+    margin-top: 8px;
+    font-family: 'Noto Serif JP', serif;
+  }
+
+  .divider {
+    width: 40px; height: 1px;
+    background: var(--rust);
+    margin: 24px auto;
+    animation: fadeUp 0.6s ease 0.2s both;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: #7a6a58;
+    letter-spacing: 0.1em;
+    animation: fadeUp 0.6s ease 0.3s both;
+  }
+
+  .recipe-card {
+    background: white;
+    border: 1px solid rgba(196,98,45,0.15);
+    padding: 36px 36px 32px;
+    margin-bottom: 24px;
+    position: relative;
+    box-shadow: 4px 4px 0 rgba(196,98,45,0.08);
+    animation: fadeUp 0.7s ease 0.4s both;
+    overflow: hidden;
+  }
+
+  .recipe-card::before, .recipe-card::after {
+    content: '';
+    position: absolute;
+    width: 20px; height: 20px;
+    border-color: var(--rust);
+    border-style: solid;
+    opacity: 0.4;
+  }
+  .recipe-card::before { top: 12px; left: 12px; border-width: 1px 0 0 1px; }
+  .recipe-card::after  { bottom: 12px; right: 12px; border-width: 0 1px 1px 0; }
+
+  .recipe-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--rust);
+    margin-bottom: 12px;
+  }
+
+  .season-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    padding: 2px 10px;
+    border: 1px solid var(--season-color);
+    color: var(--season-color);
+    margin-bottom: 14px;
+  }
+
+  .recipe-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(20px, 5vw, 28px);
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+
+  .recipe-desc {
+    font-size: 14px;
+    line-height: 1.9;
+    color: #5a4e42;
+    margin-bottom: 24px;
+    border-left: 2px solid var(--warm);
+    padding-left: 16px;
+  }
+
+  /* X埋め込みエリア */
+  .tweet-wrap {
+    margin-bottom: 20px;
+    border-top: 1px solid var(--warm);
+    padding-top: 20px;
+  }
+
+  .tweet-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: #9a8878;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .tweet-label::before {
+    content: '✕';
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* twitter-tweet ブロックを中央寄せしない（左寄せ） */
+  .twitter-tweet {
+    margin: 0 !important;
+  }
+
+  .tweet-loading {
+    font-size: 12px;
+    color: #b0a090;
+    letter-spacing: 0.1em;
+    padding: 16px 0;
+  }
+
+  /* Xで見るリンク（fallback） */
+  .x-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--rust);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    margin-top: 8px;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+  .x-link:hover { opacity: 1; text-decoration: underline; }
+
+  .recipe-meta {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .meta-item {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: #9a8878;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .meta-item::before {
+    content: '◆';
+    font-size: 6px;
+    color: var(--rust);
+    opacity: 0.6;
+  }
+
+  .recipe-counter {
+    text-align: right;
+    font-size: 11px;
+    color: #b0a090;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+
+  .btn-wrap {
+    text-align: center;
+    animation: fadeUp 0.7s ease 0.5s both;
+  }
+
+  button {
+    background: none;
+    border: 1.5px solid var(--ink);
+    color: var(--ink);
+    font-family: 'Noto Serif JP', serif;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    padding: 14px 40px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  button::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--ink);
+    transform: translateY(100%);
+    transition: transform 0.25s ease;
+    z-index: -1;
+  }
+  button:hover { color: var(--cream); }
+  button:hover::after { transform: translateY(0); }
+
+  footer {
+    text-align: center;
+    margin-top: 48px;
+    font-size: 11px;
+    color: #b0a090;
+    letter-spacing: 0.12em;
+    line-height: 2;
+    animation: fadeUp 0.7s ease 0.6s both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .swap { animation: fadeUp 0.35s ease; }
+
+  .spring { --season-color: #c4866e; }
+  .summer { --season-color: #4a8a6e; }
+  .autumn { --season-color: #c4622d; }
+  .winter { --season-color: #5a6a8a; }
+</style>
+</head>
+<body>
+<div class="container" id="app">
+  <header>
+    <div class="season-badge" id="seasonBadge"></div>
+    <h1>あかりごはん<span>長谷川あかりのきょうのレシピ</span></h1>
+    <div class="divider"></div>
+    <p class="subtitle">今日も、おいしいものをつくろう。</p>
+  </header>
+
+  <p class="recipe-counter" id="counter"></p>
+
+  <div class="recipe-card" id="recipeCard">
+    <p class="recipe-label">Today's Recipe</p>
+    <div class="season-tag" id="seasonTag"></div>
+    <h2 class="recipe-title" id="recipeTitle"></h2>
+    <p class="recipe-desc" id="recipeDesc"></p>
+    <div class="recipe-meta" id="recipeMeta"></div>
+    <div class="tweet-wrap" id="tweetWrap"></div>
+  </div>
+
+  <div class="btn-wrap">
+    <button onclick="nextRecipe()">別のレシピを見る</button>
+  </div>
+
+  <footer>
+    <div style="font-size:28px; margin-bottom:10px;">🥢</div>
+    <p>レシピ情報は長谷川あかりさんの公開情報をもとにまとめています</p>
+    <p>食材・分量・手順はXの投稿でご確認ください</p>
+  </footer>
+</div>
+
+<!-- X公式ウィジェット -->
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<script>
+const RECIPES = [
+  // ===== noteで紹介されていたレシピ（X投稿URL付き） =====
+  {
+    season:["冬"],
+    title:"ほうれん草と豚肉の常夜鍋",
+    desc:"ポン酢でも美味しいけれど、パルメザンチーズ＋レモン果汁が最高。ほうれん草がとにかく美味でスルスル胃に入る、冬の体に染みるお鍋。",
+    ingredients:"豚肉、ほうれん草、パルメザンチーズ、レモン",
+    time:"約15分",
+    tweetId:"1887078604900802744"
+  },
+  {
+    season:["夏"],
+    title:"レタスと卵の温かい蒸しサラダ",
+    desc:"塩と酢でさっと蒸したレタスに卵をのせて、隠し味のクリームチーズが絡んで絶品。ふたりでレタス丸一個ぺろりといける、素朴で贅沢なサラダ。",
+    ingredients:"レタス、卵、クリームチーズ、塩・酢",
+    time:"約10分",
+    tweetId:"1811683306922201157"
+  },
+  {
+    season:["春","夏"],
+    title:"豚肉と青梗菜の酢醤油焼きそば",
+    desc:"ソース味でも塩味でもない、あたらしい美味しさ。料理酒・酢・醤油・塩胡椒だけで作るシンプルさが食材の味を引き出す極上の麺料理。",
+    ingredients:"焼きそば麺、豚肉、チンゲン菜、酢・醤油",
+    time:"約15分",
+    tweetId:"1923651661006033267"
+  },
+  {
+    season:["冬"],
+    title:"小松菜とチーズの冬ぎょうざ",
+    desc:"滋味あふれる小松菜が主役の冬餃子。パルメザンチーズがいい仕事をしてくれる洋風な餃子。フライパンひとつで洗い物最小限、気楽に作れる。",
+    ingredients:"餃子の皮、小松菜、パルメザンチーズ、豚ひき肉",
+    time:"約30分",
+    tweetId:"1876937417422147714"
+  },
+  {
+    season:["春","夏","秋","冬"],
+    title:"じゃがいもとちくわのバター煮",
+    desc:"友達に作り方を聞かれる率No.1。料理酒・塩・バター・水で煮るだけなのにちくわから出る魚介の旨みが抜群。温ポテサラ感覚でどうぞ。",
+    ingredients:"じゃがいも、ちくわ、バター、料理酒・塩",
+    time:"約15分",
+    tweetId:"1747835611606896919"
+  },
+  {
+    season:["冬"],
+    title:"ほうれん草と鱈のオイル酒蒸し",
+    desc:"野菜1種類＋魚1種類で作れるシンプルレシピ。旬のほうれん草を1束使い切り、くたくたになるまで蒸す。細胞が喜ぶやさしい味。",
+    ingredients:"たら、ほうれん草、オリーブオイル、塩・酒",
+    time:"約15分",
+    tweetId:"1589943386504843265"
+  },
+  {
+    season:["春","夏","秋","冬"],
+    title:"ビーフストロガノフ",
+    desc:"夫リクエスト率No.1料理。身近な材料のみで調理時間15分。生クリームとヨーグルトを1:1で加えるとまろやかで食べ疲れないすっきりとした味に。",
+    ingredients:"牛肉、玉ねぎ、生クリーム、プレーンヨーグルト",
+    time:"約15分",
+    tweetId:"1552606822657593344"
+  },
+  {
+    season:["秋"],
+    title:"玉ねぎだけのチーズパスタ",
+    desc:"具材は玉ねぎだけなのに、甘くとろける玉ねぎ・パルメザンチーズの塩気・丸ごと茹でたにんにくのコク・ローリエの香り。家でしか食べられない贅沢さ。",
+    ingredients:"パスタ、玉ねぎ、パルメザンチーズ、ローリエ・にんにく",
+    time:"約25分",
+    tweetId:"1975862005518274894"
+  },
+  {
+    season:["春"],
+    title:"アスパラガスのソース",
+    desc:"刻んだアスパラをソースにする斬新な発想。野菜もきのこも焼いてかけたら何でも合う万能ソース。旬のアスパラの香りが心の栄養になる春の一品。",
+    ingredients:"アスパラガス、オリーブオイル、塩、にんにく",
+    time:"約10分",
+    tweetId:"1770040909704442071"
+  },
+  {
+    season:["春","夏","秋","冬"],
+    title:"バター酒蒸しハンバーグ",
+    desc:"フライパンひとつ、ヘラで混ぜるだけで包丁も手も使わず20分で完成。酒蒸しにした汁をそのままソースに。牛乳をたっぷり入れるとふっくら美味しい。",
+    ingredients:"合いびき肉、玉ねぎ、バター、酒・牛乳",
+    time:"約20分",
+    tweetId:"1613892330855223296"
+  },
+
+  // ===== 直接指定されたXのツイート =====
+  {
+    season:["春","夏","秋","冬"],
+    title:"豚だんごと三つ葉・生姜の香りスープかけごはん",
+    desc:"豚ひき肉のだんごと三つ葉、生姜の香りが合わさったやさしいスープをご飯にかける一皿。生姜の香りが体の芯まで温めてくれる、何度でも食べたくなる味。",
+    ingredients:"豚ひき肉、三つ葉、生姜、ご飯",
+    time:"約20分",
+    tweetId:"2041862050054598947"
+  },
+  {
+    season:["春","夏","秋","冬"],
+    title:"豚薄切り肉と油揚げ、餃子の皮の重ね蒸し",
+    desc:"豚薄切り肉と油揚げ、餃子の皮を重ねて塩水で蒸し、鰹節・ねり辛子・少しの醤油でいただくザ・実家飯。どこかで食べたことがあるようでいて誰の記憶にもない、食べると「ただいま」と言いたくなる味。",
+    ingredients:"豚薄切り肉、油揚げ、餃子の皮、鰹節、ねり辛子",
+    time:"約15分",
+    tweetId:"2039671463490535911"
+  },
+  {
+    season:["夏"],
+    title:"あじキューライス",
+    desc:"サラダのように軽やかな丼。あじときゅうりをのせるだけなのに、さわやかで食欲をそそる夏の一皿。暑い日でもするするっと食べられる、夏の定番丼。",
+    ingredients:"あじ（刺し身）、きゅうり、ご飯、醤油",
+    time:"約10分",
+    tweetId:"2033524400428097961"
+  },
+  {
+    season:["冬"],
+    title:"豆鍋",
+    desc:"豆腐とひきわり納豆をお玉で混ぜ合わせたところに水を注いで、塩で味を調えたら好きな具材を入れるだけ。まずはそのままスープごと豆の旨味を味わって、にんにくやポン酢で味変するとまたおいしい。一生物のレシピ。",
+    ingredients:"豆腐、ひきわり納豆、塩、好みの具材",
+    time:"約15分",
+    tweetId:"2054138766579916865"
+  },
+
+  // ===== 肉村ハム蔵noteのレシピ（X投稿URL付き） =====  {
+    season:["春","夏","秋","冬"],
+    title:"ふわふわ鶏塩麻婆豆腐",
+    desc:"調味料は塩・料理酒・豆板醤の3つだけ。豆腐の水切り不要、オイルも使わず10分で完成。鶏ももひき肉の旨みが出て重たくない、夫に「今まで食べた麻婆豆腐で一番好き」と言わせたレシピ。",
+    ingredients:"豆腐、鶏ももひき肉、塩、料理酒、豆板醤",
+    time:"約10分",
+    tweetId:"1541991435435917312"
+  },
+  {
+    season:["秋","冬"],
+    title:"ぶりの湯煮・梅蕪おろしソース添え",
+    desc:"ぶりをお湯で煮ることで脂がほどよく落ちてさっぱり食べられる。蕪をおろしてソースにするおうちで料亭気分の一皿。飲み会続きの日の調整メニューにも優秀。",
+    ingredients:"ぶり、蕪、梅干し、醤油",
+    time:"約15分",
+    tweetId:"1587054974869344256"
+  },
+  {
+    season:["春","夏","秋","冬"],
+    title:"豆腐と塩昆布の春巻き",
+    desc:"絹豆腐・塩昆布・片栗粉を混ぜ、大葉と一緒に春巻きの皮で揚げるだけ。口に入れるとぱりっ、とろり。まるで白子のよう、定番食材で作るあたらしいごちそう。",
+    ingredients:"絹豆腐、塩昆布、大葉、春巻きの皮",
+    time:"約20分",
+    tweetId:"1777993833789440399"
+  },
+  {
+    season:["冬"],
+    title:"ブリと春菊のカルパッチョ風サラダ",
+    desc:"春菊の葉・海苔・ブリのお刺身を盛り付け、ナンプラー・ゆず果汁・オイルをかけるだけ。春菊の香りと海苔の旨み、ゆずの酸が脂ののった旬のブリを引き立てる。",
+    ingredients:"ぶり刺し身、春菊、海苔、ナンプラー、ゆず果汁",
+    time:"約5分",
+    tweetId:"1997619821719249204"
+  },
+  {
+    season:["春","夏","秋","冬"],
+    title:"梅とパセリの鶏出汁かけごはん",
+    desc:"鶏ささみの出汁・パセリの香り・梅の酸味を塩と料理酒だけで上品に仕上げる。ノンオイルで調整食にもぴったり。疲れた体をしゃきっとリセットしてくれる一椀。",
+    ingredients:"鶏ささみ、梅干し、パセリ、塩、料理酒",
+    time:"約20分",
+    tweetId:"1763483543462957305"
+  },
+  {
+    season:["秋","冬"],
+    title:"豚肉と小松菜の塩レモン粥",
+    desc:"にんにく・豚こま・ごはんを15分煮たら塩とレモン汁で味を調え、小松菜を余熱で火を通すだけ。さくさく食感の香り高い小松菜が感動的なおいしさ。帰りが遅い日の夕食に。",
+    ingredients:"豚こま、小松菜、ご飯、レモン、にんにく",
+    time:"約20分",
+    tweetId:"1851919472493535683"
+  },
+  {
+    season:["夏"],
+    title:"鶏ひき肉の薬味たっぷり出汁カレー",
+    desc:"ノンオイル・ノン小麦粉でさっぱり美味しい夏カレーの決定版。具材は鶏ひき肉と長ネギだけで15分完成。薬味と鰹節・胡麻をたっぷりトッピング、福神漬けの代わりの柴漬けもポイント。",
+    ingredients:"鶏ひき肉、長ネギ、カレー粉、鰹節、柴漬け",
+    time:"約15分",
+    tweetId:"1525419991331655680"
+  },
+  {
+    season:["冬"],
+    title:"カニカマとじゃがいものパスタ",
+    desc:"カニカマとじゃがいもを塩でさっと煮込み旨味を引き出したら、折ったパスタを入れ煮込むだけ。じゃがいものこっくりしたまろやかさでパスタが素朴で家庭的な味わいに。",
+    ingredients:"パスタ、カニカマ、じゃがいも、塩",
+    time:"約20分",
+    tweetId:"1866774669510185303"
+  },
+  {
+    season:["春","夏","秋","冬"],
+    title:"コンキリエのサラダ",
+    desc:"角切りトマトとクリームチーズを合わせてトマトクリームソースのような濃厚な味わいに。バジル・ツナの旨み・インゲンの青い香りと食感がアクセント。全食材が主役のごちそうサラダ。",
+    ingredients:"コンキリエ、トマト、クリームチーズ、ツナ、インゲン",
+    time:"約20分",
+    tweetId:"1970754373199503839"
+  },
+  {
+    season:["冬"],
+    title:"昆布バターポトフ",
+    desc:"昆布とバター、白菜とウインナーのやさしいスープ。昆布のおかげで和風な味わいになり柚子胡椒がよく合う。11月に入ってから5回以上作ったというお気に入りレシピ。",
+    ingredients:"白菜、ウインナー、昆布、バター",
+    time:"約30分",
+    tweetId:"1594988123133743105"
+  },
+
+  // ===== その他のレシピ（X投稿URLなし → リンクのみ） =====
+  { season:["春"], title:"新玉ねぎと海苔チーズのチヂミ", desc:"新玉ねぎの甘みを海苔とチーズの風味が引き立てる春の一品。タレなし、塩だけでシンプルに。外カリ中もっちりの食感がたまらない。", ingredients:"新玉ねぎ、海苔、チーズ、小麦粉", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/63054", source:"BAILA" },
+  { season:["春"], title:"春キャベツとベーコンのクリームパスタ", desc:"春キャベツをくたっと煮込んでベーコンの塩気と生クリームで仕上げる。甘みを存分に引き出したキャベツのとろけ感がやみつきに。", ingredients:"春キャベツ、ベーコン、パスタ、生クリーム", time:"約20分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/78160", source:"BAILA" },
+  { season:["春"], title:"豆腐の春巻き クリームチーズ入り", desc:"豆腐とクリームチーズを春巻きの皮で包んで揚げ焼きに。外はパリッと中はとろっとした食感がクセになる。", ingredients:"豆腐、クリームチーズ、春巻きの皮、豚バラ肉", time:"約25分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/78069", source:"BAILA" },
+  { season:["春"], title:"アスパラと鶏むね肉のレモン塩炒め", desc:"旬のアスパラと鶏むね肉をレモンの酸味でさっぱり仕上げる。塩のみの味つけがアスパラの風味を最大限に活かす。", ingredients:"アスパラガス、鶏むね肉、レモン、塩", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/77614", source:"BAILA" },
+  { season:["春"], title:"ゆずこしょう風味の鯛めし", desc:"刺し身をのせて炊くだけという革命的な手軽さ。ゆずこしょうのさわやかな風味が鯛の旨みに重なって格段においしくなる。", ingredients:"米、鯛の刺し身、ゆずこしょう、醤油", time:"約40分", url:"https://www.orangepage.net/food/series-food/hasegawaakari", source:"オレンジページ" },
+  { season:["春"], title:"ラディッシュの浅漬け", desc:"春が旬のラディッシュを塩で揉むだけで完成する即席漬け。鮮やかな赤が食卓を彩り、カレーに添えるだけで華やかになる。", ingredients:"ラディッシュ、塩、酢", time:"約10分", url:"https://lee.hpplus.jp/column/3192920/", source:"LEE" },
+  { season:["夏"], title:"甘辛トマ牛", desc:"トマトの酸味と牛肉の甘み、醤油のしょっぱさ、大葉のさわやかさが混然一体となる夏の名品。ご飯にのせてトマ牛丼にするのもおすすめ。", ingredients:"牛肉、トマト、大葉、醤油", time:"約10分", url:"https://note.com/moyuri/n/n85843141b3dc", source:"note" },
+  { season:["夏"], title:"豚しゃぶそうめん にらどっさり梅だれ", desc:"残暑疲れに効くにらたっぷりの梅だれそうめん。さっぱりしているのにスタミナがつく、夏の終わりに毎年作りたくなる一皿。", ingredients:"そうめん、豚しゃぶ用肉、にら、梅干し", time:"約15分", url:"https://www.orangepage.net/food/series-food/akarikihon", source:"オレンジページ" },
+  { season:["夏"], title:"サバ缶と梅干しの夏カレー", desc:"さらっとおいしい夏のカレー、秘密は梅干し。サバ缶の旨みと梅の酸味が合わさってさっぱりした後味。暑い日でも食欲がわく。", ingredients:"サバ缶、梅干し、カレー粉、玉ねぎ", time:"約20分", url:"https://esse-online.jp/list/special/recipe-hasegawaakari", source:"ESSE online" },
+  { season:["夏"], title:"納豆とトマトとコチュジャン丼", desc:"火を使わず混ぜるだけで完成。納豆にトマトとコチュジャンを合わせる大胆さがあかりさんらしい。夏バテも吹き飛ぶ力強い一杯。", ingredients:"納豆、トマト、コチュジャン、ご飯", time:"約5分", url:"https://lee.hpplus.jp/column/3192920/", source:"LEE" },
+  { season:["夏"], title:"鮭のムニエル ガーリック青のりバターソース", desc:"子供ウケダントツ一位のレシピ。にんにくとバターと青のりの魅惑的な香りに誰もが引き寄せられる。ソースは多めに作るのが正解。", ingredients:"鮭、青のり、バター、にんにく", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/63054", source:"BAILA" },
+  { season:["夏"], title:"ニラたまパスタ", desc:"パワーチャージしたい日に。ニラと卵のシンプルな組み合わせがガツンとした満足感をくれる。疲れた夜でも10分で完成する頼れる一皿。", ingredients:"パスタ、卵、にら、ごま油", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/78390", source:"BAILA" },
+  { season:["秋"], title:"切り干し大根とトマトジュースのチキンカレー", desc:"切り干し大根を戻さずそのままフライパンへ。旨みが煮汁に全部移って、鶏肉とトマトジュースのおいしさが重なり合う。LEEランキング1位の傑作。", ingredients:"切り干し大根、鶏肉、トマトジュース、カレー粉", time:"約25分", url:"https://lee.hpplus.jp/column/3192920/", source:"LEE" },
+  { season:["秋"], title:"かぼちゃと豚肉の炊き込みご飯 にんにく風味", desc:"かぼちゃを豚肉と炊き込む意外な組み合わせを成立させるのはにんにく。大ぶりカットでほくほく感を楽しんで、ゆずこしょうで味変も◎。", ingredients:"米、かぼちゃ、豚肉、にんにく", time:"約40分", url:"https://lee.hpplus.jp/column/3192920/", source:"LEE" },
+  { season:["秋"], title:"ぶりとみょうがのバター炒め", desc:"脂がのった秋のぶりとさわやかなみょうがをバターでまとめる。調味料をそぎ落としたシンプルさで素材の味わいが主役の一皿。", ingredients:"ぶり、みょうが、バター、酒", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/63054", source:"BAILA" },
+  { season:["秋"], title:"鶏肉と厚揚げのツヤ照り炒め", desc:"ツヤッとした照りが食欲をそそる秋のメインおかず。厚揚げが鶏肉のかさを増してコスパよし。甘辛だれがご飯に最高に合う。", ingredients:"鶏肉、厚揚げ、醤油、みりん", time:"約15分", url:"https://esse-online.jp/list/special/recipe-hasegawaakari", source:"ESSE online" },
+  { season:["冬"], title:"豚汁 長谷川あかり流", desc:"30分放置がおいしさの決め手。火を止めてじっくり休ませることで味しみと香りが全然違うと話題。冬の寒い夜に体の芯まで温まる一椀。", ingredients:"豚バラ肉、大根、にんじん、ごぼう", time:"約40分（放置込み）", url:"https://www.orangepage.net/food/series-food/akarikihon", source:"オレンジページ" },
+  { season:["冬"], title:"みそスペアリブと大根のフライパン蒸し", desc:"骨つき肉の旨みを吸った大根までおいしいフライパンひとつのごちそう。みそベースのこっくりした味わいが冬のおもてなしにぴったり。", ingredients:"スペアリブ、大根、みそ、酒", time:"約35分", url:"https://tennenseikatsu.jp/_tags/%E9%95%B7%E8%B0%B7%E5%B7%9D%E3%81%82%E3%81%8B%E3%82%8A", source:"天然生活" },
+  { season:["冬"], title:"白いミネストローネ", desc:"だしはとらない、味つけは塩だけなのに驚きのおいしさ。白い見た目が上品で、冬野菜の旨みが凝縮されたやさしいスープが体を温める。", ingredients:"白菜、じゃがいも、玉ねぎ、塩", time:"約25分", url:"https://www.orangepage.net/food/series-food/hasegawaakari", source:"オレンジページ" },
+  { season:["冬"], title:"レモンバター香るチキンソテー", desc:"鶏むね肉が驚きのしっとり感に仕上がると話題のレシピ。レモンとバターの香りが鶏肉を上品に包み込み、ひと口目から感動する冬の定番。", ingredients:"鶏むね肉、レモン、バター、にんにく", time:"約20分", url:"https://www.orangepage.net/food/series-food/akarikihon", source:"オレンジページ" },
+  { season:["春","夏","秋","冬"], title:"絶品白あえ 粉チーズで", desc:"豆腐を水切りせず粉チーズで和える天才的な発想。手間なしで作れるのに濃厚でコクのある白あえが完成する万能副菜。", ingredients:"豆腐、粉チーズ、ごま、醤油", time:"約5分", url:"https://www.orangepage.net/food/series-food/akarikihon", source:"オレンジページ" },
+  { season:["春","夏","秋","冬"], title:"しょうゆオムライス", desc:"バターではなく醤油で炒めるオムライスが新鮮で後を引くおいしさ。和の風味がふわとろ卵とご飯に絡まって「これだ」と言いたくなる。", ingredients:"米、卵、鶏肉、醤油", time:"約20分", url:"https://www.kikkoman.co.jp/homecook/theme/popular/hasegawaakari.html", source:"キッコーマン" },
+  { season:["春","夏","秋","冬"], title:"しょうゆだけから揚げ", desc:"下味は醤油だけというシンプルさなのに絶品のから揚げ。素材の旨みがぎゅっと凝縮されて、余計なものを加えない潔さがあかりさんらしい。", ingredients:"鶏もも肉、醤油、片栗粉、揚げ油", time:"約20分", url:"https://www.kikkoman.co.jp/homecook/theme/popular/hasegawaakari.html", source:"キッコーマン" },
+
+  // ===== BAILA 魚料理レシピ7選 =====
+  { season:["春"], title:"鯛と豆苗のナンプラークリーム煮", desc:"鯛の上品な旨みと豆苗のシャキシャキ感を、ナンプラーとクリームでエスニックにまとめた春の魚料理。意外な組み合わせなのに見事にまとまる、あかりさんらしい一品。", ingredients:"鯛、豆苗、ナンプラー、生クリーム", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/79539", source:"BAILA（食材・分量はこちら）" },
+  { season:["冬"], title:"鱈と春菊、じゃがいもの白ワイン蒸し", desc:"冬の食材3つを白ワインで蒸すだけのごちそう。じゃがいものホクホク感と春菊の香り、鱈のやさしい旨みが白ワインの香りと合わさって贅沢な一皿に。", ingredients:"たら、春菊、じゃがいも、白ワイン", time:"約20分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/79539", source:"BAILA（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"サーモンのソテー ガーリック青のりバターソース", desc:"サーモンをソテーして、にんにく・バター・青のりのソースをかけるだけ。美肌成分もたっぷり摂れて、香りが食欲をそそる見た目も華やかな魚料理。", ingredients:"サーモン、青のり、バター、にんにく", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/79539", source:"BAILA（食材・分量はこちら）" },
+  { season:["秋"], title:"ぶりとみょうがのバター炒め", desc:"脂がのった秋のぶりとさわやかなみょうがをバターでまとめる。調味料をそぎ落としたシンプルさで素材の味わいが主役。ぶりの旨みをみょうがが引き立てる。", ingredients:"ぶり、みょうが、バター、塩", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/79539", source:"BAILA（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"塩鯖のワイン蒸し キノコバターソース", desc:"塩鯖を白ワインで蒸して、きのこバターソースをかけるだけ。塩鯖の旨みときのこのコクがバターで一体になる、フライパンひとつで作れる秋冬の定番魚料理。", ingredients:"塩鯖、きのこ、バター、白ワイン", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/79539", source:"BAILA（食材・分量はこちら）" },
+  { season:["秋"], title:"サンマと茄子のオイル蒸し", desc:"秋の旬食材サンマと茄子をオリーブオイルで蒸すだけ。サンマの脂と茄子のとろっとした食感がオイルとなじんで、シンプルなのに深みのある秋の一皿。", ingredients:"さんま、茄子、オリーブオイル、塩", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/79539", source:"BAILA（食材・分量はこちら）" },
+
+  // ===== オレンジページ 晩ごはんロードマップ =====
+  { season:["夏"], title:"パエリア風の炊き込みご飯＆サラダ", desc:"ピーマンを丸ごと炊き込むという驚きの発想。段取りよく2品同時に完成させる晩ごはんロードマップ式。炊き上がった瞬間の香りがたまらない。", ingredients:"米、ピーマン、鶏肉、オリーブオイル", time:"約40分", url:"https://www.orangepage.net/food/series-food/akari-dinnerroadmap/256756", source:"オレンジページ（食材・手順はこちら）" },
+  { season:["春","夏"], title:"豚の梅じそチーズ焼きと豆苗アボカドサラダ", desc:"初夏の大人気献立。梅・青じそ・チーズという和洋ミックスの組み合わせが豚肉をごちそうに変える。豆苗アボカドサラダと合わせて栄養満点の2品献立。", ingredients:"豚肉、梅干し、青じそ、チーズ、豆苗、アボカド", time:"約20分", url:"https://www.orangepage.net/food/series-food/akari-dinnerroadmap/248846", source:"オレンジページ（食材・手順はこちら）" },
+  { season:["春"], title:"豚こまだんごとキャベツのワイン蒸し", desc:"春野菜を使った2品献立のメインレシピ。豚こまを丸めてだんご状にしてワイン蒸しにするだけ。キャベツの甘みとワインの香りが合わさって春らしい一皿に。", ingredients:"豚こま切れ肉、春キャベツ、白ワイン、塩", time:"約20分", url:"https://www.orangepage.net/food/series-food/akari-dinnerroadmap/236860", source:"オレンジページ（食材・手順はこちら）" },
+  { season:["春","夏","秋","冬"], title:"野菜ジュースのペンネと卵スープ", desc:"20分で2品献立が完成する段取り術つき。野菜ジュースをそのままパスタソースに使う発想が斬新。卵スープと合わせて栄養バランスも完璧な時短献立。", ingredients:"ペンネ、野菜ジュース、卵、塩", time:"約20分", url:"https://www.orangepage.net/food/series-food/akari-dinnerroadmap/230820", source:"オレンジページ（食材・手順はこちら）" },
+  { season:["冬"], title:"さばの湯煮・ブロッコリーサラダ・混ぜご飯の3品献立", desc:"ほったらかし手順で3品同時完成。さばを湯煮にしてさっぱり食べやすく、ブロッコリーサラダと混ぜご飯を組み合わせた栄養満点の冬の定番献立。", ingredients:"さば、ブロッコリー、米、梅干し", time:"約30分", url:"https://www.orangepage.net/food/series-food/akari-dinnerroadmap/225180", source:"オレンジページ（食材・手順はこちら）" },
+  { season:["冬"], title:"鶏肉の梅バター蒸し＆ほうれん草の豆乳スープ", desc:"ほったらかしで2品同時に完成する晩ごはんロードマップ式。梅とバターの組み合わせが鶏肉をしっとりジューシーに仕上げ、豆乳スープでやさしく体を温める。", ingredients:"鶏肉、梅干し、バター、ほうれん草、豆乳", time:"約25分", url:"https://www.orangepage.net/food/series-food/akari-dinnerroadmap/218976", source:"オレンジページ（食材・手順はこちら）" },
+];
+
+function getSeason() {
+  const m = new Date().getMonth() + 1;
+  if (m >= 3 && m <= 5)  return { name:'春', en:'spring', label:'SPRING — 春' };
+  if (m >= 6 && m <= 8)  return { name:'夏', en:'summer', label:'SUMMER — 夏' };
+  if (m >= 9 && m <= 11) return { name:'秋', en:'autumn', label:'AUTUMN — 秋' };
+  return { name:'冬', en:'winter', label:'WINTER — 冬' };
+}
+
+let season, pool, idx;
+
+function init() {
+  season = getSeason();
+  document.getElementById('seasonBadge').textContent = season.label;
+  document.getElementById('app').className = 'container ' + season.en;
+  pool = RECIPES.filter(r => r.season.includes(season.name));
+  pool = shuffle(pool);
+  idx = 0;
+  showRecipe();
+}
+
+function nextRecipe() {
+  idx = (idx + 1) % pool.length;
+  const card = document.getElementById('recipeCard');
+  card.classList.remove('swap');
+  void card.offsetWidth;
+  card.classList.add('swap');
+  showRecipe();
+}
+
+function showRecipe() {
+  const r = pool[idx];
+
+  document.getElementById('recipeTitle').textContent = r.title;
+  document.getElementById('recipeDesc').textContent  = r.desc;
+  document.getElementById('seasonTag').textContent   = r.season.length > 1 ? '年中' : season.name + 'のレシピ';
+
+  const meta = document.getElementById('recipeMeta');
+  meta.innerHTML = `<span class="meta-item">${r.ingredients}</span>`;
+  if (r.time) meta.innerHTML += `<span class="meta-item">${r.time}</span>`;
+
+  const tweetWrap = document.getElementById('tweetWrap');
+
+  if (r.tweetId) {
+    // X埋め込み
+    const xUrl = `https://twitter.com/akari_hasegawa/status/${r.tweetId}`;
+    tweetWrap.innerHTML = `
+      <p class="tweet-label">Xで食材・作り方を確認</p>
+      <blockquote class="twitter-tweet" data-lang="ja" data-dnt="true">
+        <a href="${xUrl}"></a>
+      </blockquote>
+    `;
+    // ウィジェットを再レンダリング
+    if (window.twttr && window.twttr.widgets) {
+      window.twttr.widgets.load(tweetWrap);
+    }
+  } else if (r.url) {
+    // 外部リンク
+    tweetWrap.innerHTML = `
+      <p class="tweet-label">食材・作り方はこちら</p>
+      <a class="x-link" href="${r.url}" target="_blank" rel="noopener">↗ ${r.source}でレシピを見る</a>
+    `;
+  } else {
+    tweetWrap.innerHTML = '';
+  }
+
+  document.getElementById('counter').textContent =
+    `${season.name}のレシピ ${idx + 1} / ${pool.length}`;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+init();
+</script>
+</body>
+</html>
