@@ -395,6 +395,40 @@ const RECIPES = [
     tweetId:"1613892330855223296"
   },
 
+  // ===== 直接指定されたXのツイート =====
+  {
+    season:["春","夏","秋","冬"],
+    title:"豚だんごと三つ葉・生姜の香りスープかけごはん",
+    desc:"豚ひき肉のだんごと三つ葉、生姜の香りが合わさったやさしいスープをご飯にかける一皿。生姜の香りが体の芯まで温めてくれる、何度でも食べたくなる味。",
+    ingredients:"豚ひき肉、三つ葉、生姜、ご飯",
+    time:"約20分",
+    tweetId:"2041862050054598947"
+  },
+  {
+    season:["春","夏","秋","冬"],
+    title:"豚薄切り肉と油揚げ、餃子の皮の重ね蒸し",
+    desc:"豚薄切り肉と油揚げ、餃子の皮を重ねて塩水で蒸し、鰹節・ねり辛子・少しの醤油でいただくザ・実家飯。どこかで食べたことがあるようでいて誰の記憶にもない、食べると「ただいま」と言いたくなる味。",
+    ingredients:"豚薄切り肉、油揚げ、餃子の皮、鰹節、ねり辛子",
+    time:"約15分",
+    tweetId:"2039671463490535911"
+  },
+  {
+    season:["夏"],
+    title:"あじキューライス",
+    desc:"サラダのように軽やかな丼。あじときゅうりをのせるだけなのに、さわやかで食欲をそそる夏の一皿。暑い日でもするするっと食べられる、夏の定番丼。",
+    ingredients:"あじ（刺し身）、きゅうり、ご飯、醤油",
+    time:"約10分",
+    tweetId:"2033524400428097961"
+  },
+  {
+    season:["冬"],
+    title:"豆鍋",
+    desc:"豆腐とひきわり納豆をお玉で混ぜ合わせたところに水を注いで、塩で味を調えたら好きな具材を入れるだけ。まずはそのままスープごと豆の旨味を味わって、にんにくやポン酢で味変するとまたおいしい。一生物のレシピ。",
+    ingredients:"豆腐、ひきわり納豆、塩、好みの具材",
+    time:"約15分",
+    tweetId:"2054138766579916865"
+  },
+
   // ===== 肉村ハム蔵noteのレシピ（X投稿URL付き） =====
   {
     season:["春","夏","秋","冬"],
@@ -501,6 +535,22 @@ const RECIPES = [
   { season:["春","夏","秋","冬"], title:"絶品白あえ 粉チーズで", desc:"豆腐を水切りせず粉チーズで和える天才的な発想。手間なしで作れるのに濃厚でコクのある白あえが完成する万能副菜。", ingredients:"豆腐、粉チーズ、ごま、醤油", time:"約5分", url:"https://www.orangepage.net/food/series-food/akarikihon", source:"オレンジページ" },
   { season:["春","夏","秋","冬"], title:"しょうゆオムライス", desc:"バターではなく醤油で炒めるオムライスが新鮮で後を引くおいしさ。和の風味がふわとろ卵とご飯に絡まって「これだ」と言いたくなる。", ingredients:"米、卵、鶏肉、醤油", time:"約20分", url:"https://www.kikkoman.co.jp/homecook/theme/popular/hasegawaakari.html", source:"キッコーマン" },
   { season:["春","夏","秋","冬"], title:"しょうゆだけから揚げ", desc:"下味は醤油だけというシンプルさなのに絶品のから揚げ。素材の旨みがぎゅっと凝縮されて、余計なものを加えない潔さがあかりさんらしい。", ingredients:"鶏もも肉、醤油、片栗粉、揚げ油", time:"約20分", url:"https://www.kikkoman.co.jp/homecook/theme/popular/hasegawaakari.html", source:"キッコーマン" },
+
+  // ===== BAILA 魚料理レシピ7選 =====
+  { season:["春"], title:"鯛と豆苗のナンプラークリーム煮", desc:"鯛の上品な旨みと豆苗のシャキシャキ感を、ナンプラーとクリームでエスニックにまとめた春の魚料理。意外な組み合わせなのに見事にまとまる、あかりさんらしい一品。", ingredients:"鯛、豆苗、ナンプラー、生クリーム", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/79539", source:"BAILA（食材・分量はこちら）" },
+  { season:["冬"], title:"鱈と春菊、じゃがいもの白ワイン蒸し", desc:"冬の食材3つを白ワインで蒸すだけのごちそう。じゃがいものホクホク感と春菊の香り、鱈のやさしい旨みが白ワインの香りと合わさって贅沢な一皿に。", ingredients:"たら、春菊、じゃがいも、白ワイン", time:"約20分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/79539", source:"BAILA（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"サーモンのソテー ガーリック青のりバターソース", desc:"サーモンをソテーして、にんにく・バター・青のりのソースをかけるだけ。美肌成分もたっぷり摂れて、香りが食欲をそそる見た目も華やかな魚料理。", ingredients:"サーモン、青のり、バター、にんにく", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/79539", source:"BAILA（食材・分量はこちら）" },
+  { season:["秋"], title:"ぶりとみょうがのバター炒め", desc:"脂がのった秋のぶりとさわやかなみょうがをバターでまとめる。調味料をそぎ落としたシンプルさで素材の味わいが主役。ぶりの旨みをみょうがが引き立てる。", ingredients:"ぶり、みょうが、バター、塩", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/79539", source:"BAILA（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"塩鯖のワイン蒸し キノコバターソース", desc:"塩鯖を白ワインで蒸して、きのこバターソースをかけるだけ。塩鯖の旨みときのこのコクがバターで一体になる、フライパンひとつで作れる秋冬の定番魚料理。", ingredients:"塩鯖、きのこ、バター、白ワイン", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/79539", source:"BAILA（食材・分量はこちら）" },
+  { season:["秋"], title:"サンマと茄子のオイル蒸し", desc:"秋の旬食材サンマと茄子をオリーブオイルで蒸すだけ。サンマの脂と茄子のとろっとした食感がオイルとなじんで、シンプルなのに深みのある秋の一皿。", ingredients:"さんま、茄子、オリーブオイル、塩", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/79539", source:"BAILA（食材・分量はこちら）" },
+
+  // ===== オレンジページ 晩ごはんロードマップ =====
+  { season:["夏"], title:"パエリア風の炊き込みご飯＆サラダ", desc:"ピーマンを丸ごと炊き込むという驚きの発想。段取りよく2品同時に完成させる晩ごはんロードマップ式。炊き上がった瞬間の香りがたまらない。", ingredients:"米、ピーマン、鶏肉、オリーブオイル", time:"約40分", url:"https://www.orangepage.net/food/series-food/akari-dinnerroadmap/256756", source:"オレンジページ（食材・手順はこちら）" },
+  { season:["春","夏"], title:"豚の梅じそチーズ焼きと豆苗アボカドサラダ", desc:"初夏の大人気献立。梅・青じそ・チーズという和洋ミックスの組み合わせが豚肉をごちそうに変える。豆苗アボカドサラダと合わせて栄養満点の2品献立。", ingredients:"豚肉、梅干し、青じそ、チーズ、豆苗、アボカド", time:"約20分", url:"https://www.orangepage.net/food/series-food/akari-dinnerroadmap/248846", source:"オレンジページ（食材・手順はこちら）" },
+  { season:["春"], title:"豚こまだんごとキャベツのワイン蒸し", desc:"春野菜を使った2品献立のメインレシピ。豚こまを丸めてだんご状にしてワイン蒸しにするだけ。キャベツの甘みとワインの香りが合わさって春らしい一皿に。", ingredients:"豚こま切れ肉、春キャベツ、白ワイン、塩", time:"約20分", url:"https://www.orangepage.net/food/series-food/akari-dinnerroadmap/236860", source:"オレンジページ（食材・手順はこちら）" },
+  { season:["春","夏","秋","冬"], title:"野菜ジュースのペンネと卵スープ", desc:"20分で2品献立が完成する段取り術つき。野菜ジュースをそのままパスタソースに使う発想が斬新。卵スープと合わせて栄養バランスも完璧な時短献立。", ingredients:"ペンネ、野菜ジュース、卵、塩", time:"約20分", url:"https://www.orangepage.net/food/series-food/akari-dinnerroadmap/230820", source:"オレンジページ（食材・手順はこちら）" },
+  { season:["冬"], title:"さばの湯煮・ブロッコリーサラダ・混ぜご飯の3品献立", desc:"ほったらかし手順で3品同時完成。さばを湯煮にしてさっぱり食べやすく、ブロッコリーサラダと混ぜご飯を組み合わせた栄養満点の冬の定番献立。", ingredients:"さば、ブロッコリー、米、梅干し", time:"約30分", url:"https://www.orangepage.net/food/series-food/akari-dinnerroadmap/225180", source:"オレンジページ（食材・手順はこちら）" },
+  { season:["冬"], title:"鶏肉の梅バター蒸し＆ほうれん草の豆乳スープ", desc:"ほったらかしで2品同時に完成する晩ごはんロードマップ式。梅とバターの組み合わせが鶏肉をしっとりジューシーに仕上げ、豆乳スープでやさしく体を温める。", ingredients:"鶏肉、梅干し、バター、ほうれん草、豆乳", time:"約25分", url:"https://www.orangepage.net/food/series-food/akari-dinnerroadmap/218976", source:"オレンジページ（食材・手順はこちら）" },
 ];
 
 function getSeason() {
