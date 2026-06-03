@@ -286,6 +286,10 @@
     <p class="subtitle">今日も、おいしいものをつくろう。</p>
   </header>
 
+  <div class="btn-wrap">
+    <button onclick="nextRecipe()">別のレシピを見る</button>
+  </div>
+
   <p class="recipe-counter" id="counter"></p>
 
   <div class="recipe-card" id="recipeCard">
@@ -297,9 +301,6 @@
     <div class="tweet-wrap" id="tweetWrap"></div>
   </div>
 
-  <div class="btn-wrap">
-    <button onclick="nextRecipe()">別のレシピを見る</button>
-  </div>
 
   <footer>
     <div style="font-size:28px; margin-bottom:10px;">🥢</div>
@@ -323,7 +324,7 @@ const RECIPES = [
     tweetId:"1887078604900802744"
   },
   {
-    season:["夏"],
+    season:["春","夏","秋","冬"],
     title:"レタスと卵の温かい蒸しサラダ",
     desc:"塩と酢でさっと蒸したレタスに卵をのせて、隠し味のクリームチーズが絡んで絶品。ふたりでレタス丸一個ぺろりといける、素朴で贅沢なサラダ。",
     ingredients:"レタス、卵、クリームチーズ、塩・酢",
@@ -331,7 +332,7 @@ const RECIPES = [
     tweetId:"1811683306922201157"
   },
   {
-    season:["春","夏"],
+    season:["春","夏","秋","冬"],
     title:"豚肉と青梗菜の酢醤油焼きそば",
     desc:"ソース味でも塩味でもない、あたらしい美味しさ。料理酒・酢・醤油・塩胡椒だけで作るシンプルさが食材の味を引き出す極上の麺料理。",
     ingredients:"焼きそば麺、豚肉、チンゲン菜、酢・醤油",
@@ -371,7 +372,7 @@ const RECIPES = [
     tweetId:"1552606822657593344"
   },
   {
-    season:["秋"],
+    season:["春","夏","秋","冬"],
     title:"玉ねぎだけのチーズパスタ",
     desc:"具材は玉ねぎだけなのに、甘くとろける玉ねぎ・パルメザンチーズの塩気・丸ごと茹でたにんにくのコク・ローリエの香り。家でしか食べられない贅沢さ。",
     ingredients:"パスタ、玉ねぎ、パルメザンチーズ、ローリエ・にんにく",
@@ -471,7 +472,7 @@ const RECIPES = [
     tweetId:"1763483543462957305"
   },
   {
-    season:["秋","冬"],
+    season:["春","夏","秋","冬"],
     title:"豚肉と小松菜の塩レモン粥",
     desc:"にんにく・豚こま・ごはんを15分煮たら塩とレモン汁で味を調え、小松菜を余熱で火を通すだけ。さくさく食感の香り高い小松菜が感動的なおいしさ。帰りが遅い日の夕食に。",
     ingredients:"豚こま、小松菜、ご飯、レモン、にんにく",
@@ -479,7 +480,7 @@ const RECIPES = [
     tweetId:"1851919472493535683"
   },
   {
-    season:["夏"],
+    season:["春","夏","秋","冬"],
     title:"鶏ひき肉の薬味たっぷり出汁カレー",
     desc:"ノンオイル・ノン小麦粉でさっぱり美味しい夏カレーの決定版。具材は鶏ひき肉と長ネギだけで15分完成。薬味と鰹節・胡麻をたっぷりトッピング、福神漬けの代わりの柴漬けもポイント。",
     ingredients:"鶏ひき肉、長ネギ、カレー粉、鰹節、柴漬け",
@@ -487,7 +488,7 @@ const RECIPES = [
     tweetId:"1525419991331655680"
   },
   {
-    season:["冬"],
+    season:["春","夏","秋","冬"],
     title:"カニカマとじゃがいものパスタ",
     desc:"カニカマとじゃがいもを塩でさっと煮込み旨味を引き出したら、折ったパスタを入れ煮込むだけ。じゃがいものこっくりしたまろやかさでパスタが素朴で家庭的な味わいに。",
     ingredients:"パスタ、カニカマ、じゃがいも、塩",
@@ -518,16 +519,16 @@ const RECIPES = [
   { season:["春"], title:"アスパラと鶏むね肉のレモン塩炒め", desc:"旬のアスパラと鶏むね肉をレモンの酸味でさっぱり仕上げる。塩のみの味つけがアスパラの風味を最大限に活かす。", ingredients:"アスパラガス、鶏むね肉、レモン、塩", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/77614", source:"BAILA" },
   { season:["春"], title:"ゆずこしょう風味の鯛めし", desc:"刺し身をのせて炊くだけという革命的な手軽さ。ゆずこしょうのさわやかな風味が鯛の旨みに重なって格段においしくなる。", ingredients:"米、鯛の刺し身、ゆずこしょう、醤油", time:"約40分", url:"https://www.orangepage.net/food/series-food/hasegawaakari", source:"オレンジページ" },
   { season:["春"], title:"ラディッシュの浅漬け", desc:"春が旬のラディッシュを塩で揉むだけで完成する即席漬け。鮮やかな赤が食卓を彩り、カレーに添えるだけで華やかになる。", ingredients:"ラディッシュ、塩、酢", time:"約10分", url:"https://lee.hpplus.jp/column/3192920/", source:"LEE" },
-  { season:["夏"], title:"甘辛トマ牛", desc:"トマトの酸味と牛肉の甘み、醤油のしょっぱさ、大葉のさわやかさが混然一体となる夏の名品。ご飯にのせてトマ牛丼にするのもおすすめ。", ingredients:"牛肉、トマト、大葉、醤油", time:"約10分", url:"https://note.com/moyuri/n/n85843141b3dc", source:"note" },
+  { season:["春","夏","秋","冬"], title:"甘辛トマ牛", desc:"トマトの酸味と牛肉の甘み、醤油のしょっぱさ、大葉のさわやかさが混然一体となる夏の名品。ご飯にのせてトマ牛丼にするのもおすすめ。", ingredients:"牛肉、トマト、大葉、醤油", time:"約10分", url:"https://note.com/moyuri/n/n85843141b3dc", source:"note" },
   { season:["夏"], title:"豚しゃぶそうめん にらどっさり梅だれ", desc:"残暑疲れに効くにらたっぷりの梅だれそうめん。さっぱりしているのにスタミナがつく、夏の終わりに毎年作りたくなる一皿。", ingredients:"そうめん、豚しゃぶ用肉、にら、梅干し", time:"約15分", url:"https://www.orangepage.net/food/series-food/akarikihon", source:"オレンジページ" },
   { season:["夏"], title:"サバ缶と梅干しの夏カレー", desc:"さらっとおいしい夏のカレー、秘密は梅干し。サバ缶の旨みと梅の酸味が合わさってさっぱりした後味。暑い日でも食欲がわく。", ingredients:"サバ缶、梅干し、カレー粉、玉ねぎ", time:"約20分", url:"https://esse-online.jp/list/special/recipe-hasegawaakari", source:"ESSE online" },
-  { season:["夏"], title:"納豆とトマトとコチュジャン丼", desc:"火を使わず混ぜるだけで完成。納豆にトマトとコチュジャンを合わせる大胆さがあかりさんらしい。夏バテも吹き飛ぶ力強い一杯。", ingredients:"納豆、トマト、コチュジャン、ご飯", time:"約5分", url:"https://lee.hpplus.jp/column/3192920/", source:"LEE" },
+  { season:["春","夏","秋","冬"], title:"納豆とトマトとコチュジャン丼", desc:"火を使わず混ぜるだけで完成。納豆にトマトとコチュジャンを合わせる大胆さがあかりさんらしい。夏バテも吹き飛ぶ力強い一杯。", ingredients:"納豆、トマト、コチュジャン、ご飯", time:"約5分", url:"https://lee.hpplus.jp/column/3192920/", source:"LEE" },
   { season:["夏"], title:"鮭のムニエル ガーリック青のりバターソース", desc:"子供ウケダントツ一位のレシピ。にんにくとバターと青のりの魅惑的な香りに誰もが引き寄せられる。ソースは多めに作るのが正解。", ingredients:"鮭、青のり、バター、にんにく", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/63054", source:"BAILA" },
-  { season:["夏"], title:"ニラたまパスタ", desc:"パワーチャージしたい日に。ニラと卵のシンプルな組み合わせがガツンとした満足感をくれる。疲れた夜でも10分で完成する頼れる一皿。", ingredients:"パスタ、卵、にら、ごま油", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/78390", source:"BAILA" },
-  { season:["秋"], title:"切り干し大根とトマトジュースのチキンカレー", desc:"切り干し大根を戻さずそのままフライパンへ。旨みが煮汁に全部移って、鶏肉とトマトジュースのおいしさが重なり合う。LEEランキング1位の傑作。", ingredients:"切り干し大根、鶏肉、トマトジュース、カレー粉", time:"約25分", url:"https://lee.hpplus.jp/column/3192920/", source:"LEE" },
+  { season:["春","夏","秋","冬"], title:"ニラたまパスタ", desc:"パワーチャージしたい日に。ニラと卵のシンプルな組み合わせがガツンとした満足感をくれる。疲れた夜でも10分で完成する頼れる一皿。", ingredients:"パスタ、卵、にら、ごま油", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/78390", source:"BAILA" },
+  { season:["春","夏","秋","冬"], title:"切り干し大根とトマトジュースのチキンカレー", desc:"切り干し大根を戻さずそのままフライパンへ。旨みが煮汁に全部移って、鶏肉とトマトジュースのおいしさが重なり合う。LEEランキング1位の傑作。", ingredients:"切り干し大根、鶏肉、トマトジュース、カレー粉", time:"約25分", url:"https://lee.hpplus.jp/column/3192920/", source:"LEE" },
   { season:["秋"], title:"かぼちゃと豚肉の炊き込みご飯 にんにく風味", desc:"かぼちゃを豚肉と炊き込む意外な組み合わせを成立させるのはにんにく。大ぶりカットでほくほく感を楽しんで、ゆずこしょうで味変も◎。", ingredients:"米、かぼちゃ、豚肉、にんにく", time:"約40分", url:"https://lee.hpplus.jp/column/3192920/", source:"LEE" },
   { season:["秋"], title:"ぶりとみょうがのバター炒め", desc:"脂がのった秋のぶりとさわやかなみょうがをバターでまとめる。調味料をそぎ落としたシンプルさで素材の味わいが主役の一皿。", ingredients:"ぶり、みょうが、バター、酒", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/63054", source:"BAILA" },
-  { season:["秋"], title:"鶏肉と厚揚げのツヤ照り炒め", desc:"ツヤッとした照りが食欲をそそる秋のメインおかず。厚揚げが鶏肉のかさを増してコスパよし。甘辛だれがご飯に最高に合う。", ingredients:"鶏肉、厚揚げ、醤油、みりん", time:"約15分", url:"https://esse-online.jp/list/special/recipe-hasegawaakari", source:"ESSE online" },
+  { season:["春","夏","秋","冬"], title:"鶏肉と厚揚げのツヤ照り炒め", desc:"ツヤッとした照りが食欲をそそる秋のメインおかず。厚揚げが鶏肉のかさを増してコスパよし。甘辛だれがご飯に最高に合う。", ingredients:"鶏肉、厚揚げ、醤油、みりん", time:"約15分", url:"https://esse-online.jp/list/special/recipe-hasegawaakari", source:"ESSE online" },
   { season:["冬"], title:"豚汁 長谷川あかり流", desc:"30分放置がおいしさの決め手。火を止めてじっくり休ませることで味しみと香りが全然違うと話題。冬の寒い夜に体の芯まで温まる一椀。", ingredients:"豚バラ肉、大根、にんじん、ごぼう", time:"約40分（放置込み）", url:"https://www.orangepage.net/food/series-food/akarikihon", source:"オレンジページ" },
   { season:["冬"], title:"みそスペアリブと大根のフライパン蒸し", desc:"骨つき肉の旨みを吸った大根までおいしいフライパンひとつのごちそう。みそベースのこっくりした味わいが冬のおもてなしにぴったり。", ingredients:"スペアリブ、大根、みそ、酒", time:"約35分", url:"https://tennenseikatsu.jp/_tags/%E9%95%B7%E8%B0%B7%E5%B7%9D%E3%81%82%E3%81%8B%E3%82%8A", source:"天然生活" },
   { season:["冬"], title:"白いミネストローネ", desc:"だしはとらない、味つけは塩だけなのに驚きのおいしさ。白い見た目が上品で、冬野菜の旨みが凝縮されたやさしいスープが体を温める。", ingredients:"白菜、じゃがいも、玉ねぎ、塩", time:"約25分", url:"https://www.orangepage.net/food/series-food/hasegawaakari", source:"オレンジページ" },
@@ -544,6 +545,29 @@ const RECIPES = [
   { season:["秋","冬"], title:"塩鯖のワイン蒸し キノコバターソース", desc:"塩鯖を白ワインで蒸して、きのこバターソースをかけるだけ。塩鯖の旨みときのこのコクがバターで一体になる、フライパンひとつで作れる秋冬の定番魚料理。", ingredients:"塩鯖、きのこ、バター、白ワイン", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/79539", source:"BAILA（食材・分量はこちら）" },
   { season:["秋"], title:"サンマと茄子のオイル蒸し", desc:"秋の旬食材サンマと茄子をオリーブオイルで蒸すだけ。サンマの脂と茄子のとろっとした食感がオイルとなじんで、シンプルなのに深みのある秋の一皿。", ingredients:"さんま、茄子、オリーブオイル、塩", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/79539", source:"BAILA（食材・分量はこちら）" },
 
+  // ===== NHKきょうの料理 =====
+  { season:["夏"], title:"トマトと牛肉の甘辛炒め", desc:"毎日でもつくりたい気軽さで、トマトのうまみたっぷり！仕上げの青じそと白ごまはどっさり入れるのがおすすめ。10分で完成する夏の定番おかず。", ingredients:"牛肉、トマト、青じそ、白ごま", time:"約10分", url:"https://www.kyounoryouri.jp/recipe/604745_トマトと牛肉の甘辛炒め.html", source:"みんなのきょうの料理（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"ふわとろ豚にらたま", desc:"定番のにらたま炒めの進化形。卵・豚バラ肉・にらを順に炒めてボウルの中でふんわり混ぜ合わせる。ふわとろ食感がやみつきになる10分おかず。", ingredients:"卵、豚バラ肉、にら", time:"約10分", url:"https://www.kyounoryouri.jp/recipe/605332_ふわとろ豚にらたま.html", source:"みんなのきょうの料理（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"トマトチキンカレー（切り干し大根入り）", desc:"味の立役者はカルシウムや食物繊維が豊富な切り干し大根。独特のうまみと食感が時短カレーに奥深さをプラスする、NHKきょうの料理で放送された本格レシピ。", ingredients:"鶏肉、トマト、切り干し大根、カレー粉", time:"約18分", url:"https://www.kyounoryouri.jp/recipe/606091_トマトチキンカレー.html", source:"みんなのきょうの料理（食材・分量はこちら）" },
+  { season:["夏"], title:"夏のポトフ", desc:"スペアリブのうまみで、だしいらず。とうもろこしの甘みとピーマンの香りが広がって、夏の疲れも吹きとぶごちそうスープ。", ingredients:"スペアリブ、とうもろこし、ピーマン、塩", time:"約35分", url:"https://www.kyounoryouri.jp/recipe/604750_夏のポトフ.html", source:"みんなのきょうの料理（食材・分量はこちら）" },
+  { season:["夏"], title:"オクラと豚肉のしょうが炒め", desc:"オクラの風味を生かして塩ベースのシンプルな味つけに。酢をしっかりときかせれば豚バラ肉もさっぱりと食べられる、夏の10分おかず。", ingredients:"オクラ、豚バラ肉、しょうが、酢", time:"約10分", url:"https://www.kyounoryouri.jp/recipe/604748_オクラと豚肉のしょうが炒め.html", source:"みんなのきょうの料理（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"ワンボウル カルボナーラ風パスタ", desc:"ボウルの中でソースをつくって、ゆでたパスタとあえるだけ！クリームチーズで手軽にコクをプラスする、火を使わず10分で完成する革命的パスタ。", ingredients:"パスタ、クリームチーズ、卵、粉チーズ", time:"約10分", url:"https://www.kyounoryouri.jp/recipe/605333_ワンボウル カルボナーラ風パスタ.html", source:"みんなのきょうの料理（食材・分量はこちら）" },
+  { season:["夏"], title:"モロヘイヤのひき肉炒め", desc:"イタリア料理の「サルシッチャ」をイメージした香ばしい肉ダネに、モロヘイヤの爽やかな香りととろみが相性抜群。パスタにのせても◎。", ingredients:"モロヘイヤ、豚ひき肉、にんにく、塩", time:"約15分", url:"https://www.kyounoryouri.jp/recipe/604746_モロヘイヤのひき肉炒め.html", source:"みんなのきょうの料理（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"卵ふんわり柚子チャーハン", desc:"目玉焼きをつくってからご飯と混ぜる新方式！しっかり焼いた白身の香ばしさが際立ち、ほのかに香るゆずこしょうがアクセントになる絶品チャーハン。", ingredients:"ご飯、卵、ゆずこしょう、塩", time:"約10分", url:"https://www.kyounoryouri.jp/recipe/605334_卵ふんわり柚子チャーハン.html", source:"みんなのきょうの料理（食材・分量はこちら）" },
+  { season:["夏"], title:"ズッキーニの炊き込みご飯", desc:"ズッキーニをご飯にのせて炊くとトロトロの柔らかさに。おもてなしにもぴったりのおしゃれな洋風の一皿。ナイフでズッキーニを切りながら召し上がれ。", ingredients:"米、ズッキーニ、オリーブオイル、塩", time:"約40分", url:"https://www.kyounoryouri.jp/recipe/604749_ズッキーニの炊き込みご飯.html", source:"みんなのきょうの料理（食材・分量はこちら）" },
+  { season:["夏"], title:"きゅうりと牛肉のサッと煮", desc:"祖母の「とうがんの煮物」をきゅうりで再現したという一品。きゅうりの柔らかな食感とやさしい味わいに癒やされる、夏ならではの煮物。", ingredients:"きゅうり、牛肉、醤油、みりん", time:"約15分", url:"https://www.kyounoryouri.jp/recipe/604747_きゅうりと牛肉のサッと煮.html", source:"みんなのきょうの料理（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"フライパンでハムエッグみそ汁", desc:"朝から元気になれるおかず感覚の一品。目玉焼きとハムの風味がみそとよく合う、フライパンひとつで10分完成の朝ごはんにぴったりのみそ汁。", ingredients:"卵、ハム、みそ、だし", time:"約10分", url:"https://www.kyounoryouri.jp/recipe/605337_フライパンでハムエッグみそ汁.html", source:"みんなのきょうの料理（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"ざっくりかにかま茶碗蒸し", desc:"具入りの溶き卵を鍋でふんわり加熱した失敗なしの茶碗蒸し。かにかまからいいだしが出て深みのある味わいに。10分で本格的な茶碗蒸しが完成。", ingredients:"卵、カニカマ、だし、塩", time:"約10分", url:"https://www.kyounoryouri.jp/recipe/605336_ざっくりかにかま茶碗蒸し.html", source:"みんなのきょうの料理（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"巻かないだし巻き丼", desc:"だし巻き卵の風味・味わい・ふんわり食感はそのままに、フライパンでパパッと仕上げる目からウロコの新レシピ。からしバターを混ぜたご飯にのせれば驚きのおいしさ。", ingredients:"卵、だし、ご飯、からしバター", time:"約10分", url:"https://www.kyounoryouri.jp/recipe/605335_巻かないだし巻き丼.html", source:"みんなのきょうの料理（食材・分量はこちら）" },
+
+  // ===== オレンジページ「日々の料理これでいいのだ」=====
+  { season:["春","夏","秋","冬"], title:"豚肉の梅酒黒酢角煮", desc:"ほとんど放置で完成！調味料を同量で合わせるだけで、豚肉がとろとろの角煮に。梅酒の甘みと黒酢のコクが合わさった、年末のごちそうにもなる一品。", ingredients:"豚バラ肉、梅酒、黒酢、醤油", time:"約60分（放置込み）", url:"https://www.orangepage.net/food/series-food/hasegawaakari/24633", source:"オレンジページ（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"ねぎと鶏皮のシンプル炊き込みご飯", desc:"ねぎの青い部分と鶏皮だけで作る炊き込みご飯。捨てがちな部位を使い切る発想が素晴らしく、うまみたっぷりでシンプルなのに深みのある味わいに。", ingredients:"米、ねぎの青い部分、鶏皮、塩", time:"約40分", url:"https://www.orangepage.net/food/series-food/hasegawaakari/23959", source:"オレンジページ（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"練りごまのデザートスープ", desc:"お菓子作りが苦手な人へ。いつもの道具と材料で作れる、練りごまをベースにした甘いデザートスープ。ごまの濃厚なコクとやさしい甘みがじんわりしみわたる。", ingredients:"練りごま、牛乳、砂糖、塩", time:"約10分", url:"https://www.orangepage.net/food/series-food/hasegawaakari/23074", source:"オレンジページ（食材・分量はこちら）" },
+  { season:["秋"], title:"鮭の湯煮＆あら汁風みそ汁", desc:"秋鮭のいちばん手軽な食べ方。湯煮にするだけでふっくらやさしい味わいに。あら汁風みそ汁と合わせた2品献立で、鮭を余すところなく味わい尽くす。", ingredients:"鮭、みそ、塩、だし", time:"約20分", url:"https://www.orangepage.net/food/series-food/hasegawaakari/22301", source:"オレンジページ（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"クリチピーマントースト", desc:"生ピーマンをどっさりのせたトースト。想像以上のおいしさで、ピーマンの苦みとクリームチーズのまろやかさが絶妙に合わさる、あかりさんらしい大胆な一品。", ingredients:"食パン、ピーマン、クリームチーズ、塩", time:"約10分", url:"https://www.orangepage.net/food/series-food/hasegawaakari/21622", source:"オレンジページ（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"ほぼ白菜だけ餃子", desc:"白菜の塩もみなし、ボールを使わず作れる餃子。白菜がほぼメインの具材なのにしっかりおいしい、シンプルさを極めた長谷川あかりさんらしい一品。", ingredients:"白菜、餃子の皮、豚ひき肉、塩", time:"約30分", url:"https://www.orangepage.net/food/series-food/hasegawaakari/17869", source:"オレンジページ（食材・分量はこちら）" },
+
   // ===== オレンジページ 晩ごはんロードマップ =====
   { season:["夏"], title:"パエリア風の炊き込みご飯＆サラダ", desc:"ピーマンを丸ごと炊き込むという驚きの発想。段取りよく2品同時に完成させる晩ごはんロードマップ式。炊き上がった瞬間の香りがたまらない。", ingredients:"米、ピーマン、鶏肉、オリーブオイル", time:"約40分", url:"https://www.orangepage.net/food/series-food/akari-dinnerroadmap/256756", source:"オレンジページ（食材・手順はこちら）" },
   { season:["春","夏"], title:"豚の梅じそチーズ焼きと豆苗アボカドサラダ", desc:"初夏の大人気献立。梅・青じそ・チーズという和洋ミックスの組み合わせが豚肉をごちそうに変える。豆苗アボカドサラダと合わせて栄養満点の2品献立。", ingredients:"豚肉、梅干し、青じそ、チーズ、豆苗、アボカド", time:"約20分", url:"https://www.orangepage.net/food/series-food/akari-dinnerroadmap/248846", source:"オレンジページ（食材・手順はこちら）" },
@@ -551,6 +575,135 @@ const RECIPES = [
   { season:["春","夏","秋","冬"], title:"野菜ジュースのペンネと卵スープ", desc:"20分で2品献立が完成する段取り術つき。野菜ジュースをそのままパスタソースに使う発想が斬新。卵スープと合わせて栄養バランスも完璧な時短献立。", ingredients:"ペンネ、野菜ジュース、卵、塩", time:"約20分", url:"https://www.orangepage.net/food/series-food/akari-dinnerroadmap/230820", source:"オレンジページ（食材・手順はこちら）" },
   { season:["冬"], title:"さばの湯煮・ブロッコリーサラダ・混ぜご飯の3品献立", desc:"ほったらかし手順で3品同時完成。さばを湯煮にしてさっぱり食べやすく、ブロッコリーサラダと混ぜご飯を組み合わせた栄養満点の冬の定番献立。", ingredients:"さば、ブロッコリー、米、梅干し", time:"約30分", url:"https://www.orangepage.net/food/series-food/akari-dinnerroadmap/225180", source:"オレンジページ（食材・手順はこちら）" },
   { season:["冬"], title:"鶏肉の梅バター蒸し＆ほうれん草の豆乳スープ", desc:"ほったらかしで2品同時に完成する晩ごはんロードマップ式。梅とバターの組み合わせが鶏肉をしっとりジューシーに仕上げ、豆乳スープでやさしく体を温める。", ingredients:"鶏肉、梅干し、バター、ほうれん草、豆乳", time:"約25分", url:"https://www.orangepage.net/food/series-food/akari-dinnerroadmap/218976", source:"オレンジページ（食材・手順はこちら）" },
+  // ===== ファンサイト経由 新規追加レシピ =====
+  // BAILA
+  { season:["春","夏","秋","冬"], title:"豚こまの大葉から揚げ", desc:"豚こま肉を大葉で包んでから揚げにする、うち飲みつまみの定番。大葉の香りがジュワッと広がって、ビールが止まらなくなる手軽で絶品のおつまみ。", ingredients:"豚こま切れ肉、大葉、塩、片栗粉", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/72472", source:"BAILA（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"油揚げの甘酢丼", desc:"こんがり焼いた油揚げにじゅわっと甘酢がしみて心まで満たされる丼。ワンパンで完成し食べごたえも十分なのに軽やかな、あかりさんらしい丼。", ingredients:"油揚げ、米、万能ねぎ、酢", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/76469", source:"BAILA（食材・分量はこちら）" },
+  { season:["冬","春"], title:"チキンレモンクレソン煮", desc:"ワンパンで完成する軽やかレシピ。鶏もも肉をレモンとクレソンで煮込んだ、さっぱりしているのにコクのある春を感じる一品。", ingredients:"鶏もも肉、クレソン、レモン、塩", time:"約20分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/76941", source:"BAILA（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"にんじんクリームチキンカレー", desc:"煮込み10分のご褒美カレー。にんじんをたっぷり使いクリームでまろやかに仕上げた、リッチな味わいなのに驚くほど手軽なチキンカレー。", ingredients:"鶏もも肉、にんじん、生クリーム、カレー粉", time:"約20分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/74398", source:"BAILA（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"豚肉と切り干し大根のおろしれんこん煮込み", desc:"れんこんをおろして加えることでとろみが出る、ほっこり温まる秋冬の煮込み。体にやさしいほっこりした味わいに仕上がる。", ingredients:"豚肉、切り干し大根、れんこん、春雨", time:"約25分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/75101", source:"BAILA（食材・分量はこちら）" },
+  { season:["冬"], title:"鱈とキャベツのオレンジ煮込みショートパスタ", desc:"ワンパンでつくれる、簡単なのにプロっぽい一皿。オレンジの香りが鱈とキャベツを上品にまとめ、ショートパスタが旨みを全部吸い込む。", ingredients:"たら、キャベツ、ショートパスタ、白ワイン", time:"約20分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/75756", source:"BAILA（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"梅あんかけつくね", desc:"フライパンで作る手間なしなのに味わいは本格派のつくね。梅のさっぱりしたあんがからんで、さっぱりしているのに食べごたえのある一品。", ingredients:"鶏ひき肉、卵、玉ねぎ、梅干し", time:"約20分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/71614", source:"BAILA（食材・分量はこちら）" },
+  { season:["夏"], title:"トマトとしらす、大葉の夏餃子", desc:"トマトが主役のヘルシー餃子。トマトのジューシーさとしらすの旨み、大葉のさわやかさが夏らしい軽やかな餃子に。揚げ焼きでカリッと仕上げる。", ingredients:"豚ひき肉、トマト、しらす、大葉", time:"約25分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/71514", source:"BAILA（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"豚と長いもの黒ごま炒め", desc:"豚こま切れ肉と長いもをしょうがと黒ごまで炒めるお弁当にもおすすめの一品。長いものシャキシャキ食感と黒ごまの香ばしさが食欲をそそる。", ingredients:"豚こま切れ肉、山芋、しょうが、黒ごま", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/74952", source:"BAILA（食材・分量はこちら）" },
+  { season:["夏","秋"], title:"とろけるオクラのワンパンパスタ", desc:"簡単なのにごちそう気分のワンパンパスタ。オクラのとろみがパスタ全体にからんでなめらかで贅沢な食感に。ベーコンの旨みが深みをプラスする。", ingredients:"パスタ、オクラ、ベーコン、塩", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/72892", source:"BAILA（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"鶏むね肉の塩レモン炒め", desc:"鶏むね肉をレモンと塩だけで炒めるシンプルで低カロリーな一品。片栗粉をまぶして炒めることでジューシーに仕上がり、食べごたえも満点。", ingredients:"鶏むね肉、レモン、塩、片栗粉", time:"約15分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/77614", source:"BAILA（食材・分量はこちら）" },
+  // ESSE online
+  { season:["夏","秋"], title:"緑野菜のチーズ蒸し カレー風味", desc:"いんげん、ピーマン、オクラをカレー風味のチーズで蒸し上げる副菜。緑野菜のシャキシャキ感とチーズのコクがカレーの香りでまとまる一皿。", ingredients:"いんげん、ピーマン、オクラ、チーズ", time:"約10分", url:"https://esse-online.jp/articles/-/36219", source:"ESSE online（食材・分量はこちら）" },
+  { season:["夏"], title:"トマト納豆の冷たいスープかけごはん", desc:"トマトと納豆をコチュジャンでピリ辛に仕上げて冷たいスープにする、夏にぴったりの一皿。火を使わずに完成するから暑い日でもさっと作れる。", ingredients:"トマト、納豆、コチュジャン、ご飯", time:"約5分", url:"https://esse-online.jp/articles/-/33701", source:"ESSE online（食材・分量はこちら）" },
+  { season:["夏","秋"], title:"タイのあつあつごま油がけ", desc:"鯛の刺し身にあつあつのごま油をかけるだけで完成する、香り豊かな一皿。万能ねぎとごまをのせてざっくり混ぜながらご飯と一緒にどうぞ。", ingredients:"鯛（刺し身）、ごま油、万能ねぎ、塩", time:"約5分", url:"https://esse-online.jp/articles/-/34206", source:"ESSE online（食材・分量はこちら）" },
+  { season:["夏"], title:"ひき肉とゴボウの白いラグーパスタ", desc:"ゴボウを入れることで香りと食感がぐっとアップするラグーパスタ。白いソースなのに深みがあってリッチ。シンプルな材料で本格的な一皿が完成。", ingredients:"パスタ、豚ひき肉、ごぼう、玉ねぎ", time:"約25分", url:"https://esse-online.jp/articles/-/33562", source:"ESSE online（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"豆腐と鶏ひき肉、ひきわり納豆のスープ", desc:"豆腐・鶏ひき肉・ひきわり納豆の組み合わせがやさしい旨みになるスープ。栄養満点で胃に優しく、疲れた日の夜ごはんにぴったりの一椀。", ingredients:"豆腐、鶏ひき肉、ひきわり納豆、塩", time:"約15分", url:"https://esse-online.jp/articles/-/32567", source:"ESSE online（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"鶏胸肉のトマトチーズマリネ", desc:"鶏むね肉をトマトとチーズでマリネするだけ。作り置きにも最適で、冷蔵庫で味がなじんだ翌日がさらにおいしい。低カロリーなのに満足度が高い一品。", ingredients:"鶏むね肉、トマト、チーズ、塩", time:"約15分（マリネ時間除く）", url:"https://esse-online.jp/articles/-/33053", source:"ESSE online（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"大根と豚バラの卵焼き", desc:"大根と豚バラ肉を卵で包んで焼く意外な組み合わせ。大根のジューシーさと豚バラのコクが卵にからんで、おつまみにもご飯のおかずにも最高。", ingredients:"大根、豚バラ肉、卵、醤油", time:"約20分", url:"https://esse-online.jp/articles/-/30730", source:"ESSE online（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"ブリのレモンみぞれ煮", desc:"大根おろしとレモンでさっぱりと煮るぶりのみぞれ煮。片栗粉をまぶして煮ることでぶりがしっとりジューシーに仕上がる秋冬の定番魚料理。", ingredients:"ぶり、大根、レモン、片栗粉", time:"約15分", url:"https://esse-online.jp/articles/-/30729", source:"ESSE online（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"大根と鶏つくねのゆずこしょう煮", desc:"大根と鶏つくねをゆずこしょう風味で煮込む。ゆずこしょうの香りが鶏つくねの旨みを引き立てて、大根に深い味わいがしみわたる秋冬の煮物。", ingredients:"大根、鶏ひき肉、しょうが、ゆずこしょう", time:"約25分", url:"https://esse-online.jp/articles/-/30728", source:"ESSE online（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"大根とスペアリブの塩煮", desc:"大根とスペアリブを塩だけで煮込むシンプルレシピ。スペアリブの骨からいい出汁が出て、大根に旨みがしみわたる。シンプルなのに奥深い一品。", ingredients:"大根、スペアリブ、塩、酒", time:"約40分", url:"https://esse-online.jp/articles/-/30688", source:"ESSE online（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"海苔ツナマヨホットサンド", desc:"海苔とツナマヨという鉄板の組み合わせをホットサンドに。海苔の旨みとツナのコクが温めることで増して、朝ごはんにもおやつにも最高の一品。", ingredients:"食パン、ツナ缶、マヨネーズ、海苔", time:"約10分", url:"https://esse-online.jp/articles/-/30775", source:"ESSE online（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"鶏肉と厚揚げのコチュジャン豆乳炒め", desc:"厚揚げと鶏肉をコチュジャンと豆乳でまろやかに仕上げる炒め物。ピリ辛なのにまろやか、ヘルシーなのに食べごたえ満点の一品。", ingredients:"鶏肉、厚揚げ、コチュジャン、豆乳", time:"約15分", url:"https://esse-online.jp/articles/-/30320", source:"ESSE online（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"マッシュルームご飯＋豚トマト焼き", desc:"マッシュルームをバターで炒めてから炊き込む香り豊かなご飯と、豚肉とトマトを焼き合わせたおかずの2品献立。どちらもシンプルで美味しい。", ingredients:"米、マッシュルーム、豚肉、トマト", time:"約40分", url:"https://esse-online.jp/articles/-/29808", source:"ESSE online（食材・分量はこちら）" },
+  { season:["夏","秋"], title:"塩タラときゅうりの煮物", desc:"きゅうりを煮物にするという驚きのレシピ。塩たらときゅうりの意外な組み合わせがほっとする味わいに。さっと煮るだけで完成する夏の副菜。", ingredients:"塩たら、きゅうり、醤油", time:"約15分", url:"https://esse-online.jp/articles/-/29573", source:"ESSE online（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"春菊と鶏のレモン皮ぎょうざ", desc:"春菊と鶏ひき肉にレモンの皮を加えた爽やかな餃子。レモンの香りが春菊の個性を引き立てて、ひと口食べると清々しい気持ちになる。", ingredients:"春菊、鶏ひき肉、レモン、餃子の皮", time:"約30分", url:"https://esse-online.jp/articles/-/31169", source:"ESSE online（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"キャベツとしらすのぎょうざ", desc:"キャベツとしらすだけで作る軽やかな餃子。しらすの旨みがキャベツに染みて、ふんわりやさしい味わいに。塩もみなしでさっと作れるのも嬉しい。", ingredients:"キャベツ、しらす、豚ひき肉、餃子の皮", time:"約25分", url:"https://esse-online.jp/articles/-/31162", source:"ESSE online（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"白菜と豚ロースのみそクリームチーズ蒸し", desc:"白菜と豚肉をみそとクリームチーズで蒸す、こっくりまろやかな一品。みその旨みとクリームチーズのコクが白菜にしみわたって絶品。", ingredients:"白菜、豚ロース、みそ、クリームチーズ", time:"約20分", url:"https://esse-online.jp/articles/-/30735", source:"ESSE online（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"ザーサイと豚肉、切り干し大根のフライパン炊き込みごはん", desc:"ザーサイの旨みと塩気が豚肉と切り干し大根と合わさる炊き込みご飯。フライパンで手軽に作れて、中華風の深い味わいが楽しめる。", ingredients:"米、豚こま切れ肉、切り干し大根、ザーサイ", time:"約30分", url:"https://esse-online.jp/articles/-/31151", source:"ESSE online（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"塩昆布の塩豚と長イモの石窯焼き", desc:"豚バラ肉に塩昆布をまとわせて長いもと一緒に焼くだけ。昆布の旨みが豚肉に染みて、長いもがホクホクに仕上がる豪快な一品。", ingredients:"豚バラ肉、山芋、塩昆布、塩", time:"約30分", url:"https://esse-online.jp/articles/-/34916", source:"ESSE online（食材・分量はこちら）" },
+  // LEE
+  { season:["春"], title:"春キャベツと大葉の浅漬け風", desc:"春キャベツを大葉と一緒に塩でもむだけで完成する即席漬け。春キャベツの甘みと大葉のさわやかな香りが絶妙にマッチする、箸休めの定番副菜。", ingredients:"春キャベツ、大葉、塩", time:"約5分（漬け時間除く）", url:"https://lee.hpplus.jp/recipe/3516549/", source:"LEE（食材・分量はこちら）" },
+  { season:["冬","春"], title:"鶏むね肉のジュリエンヌスープ", desc:"鶏むね肉とにんじんを細切りにして煮込む上品なスープ。片栗粉でとろみをつけることで鶏肉がしっとりやわらかく仕上がる、体にやさしい一椀。", ingredients:"鶏むね肉、にんじん、片栗粉、塩", time:"約20分", url:"https://lee.hpplus.jp/recipe/3516573/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"ハヤシライス 基本調味料で", desc:"ルウなしで基本調味料だけで作るハヤシライス。デミグラス的な深みある味わいが、市販のルウを使わなくても実現できる驚きのレシピ。", ingredients:"牛肉、玉ねぎ、米、トマト缶", time:"約30分", url:"https://lee.hpplus.jp/recipe/3228582/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"小松菜の塩おひたし", desc:"気分や献立に合わせてアレンジできる小松菜の塩おひたし。シンプルに塩だけで味をととのえることで小松菜本来の甘みが引き立つ万能副菜。", ingredients:"小松菜、塩", time:"約5分", url:"https://lee.hpplus.jp/recipe/3230948/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"だしいらず牛丼", desc:"牛肉と長ねぎのうま味で十分おいしい、だし不要の牛丼。長ねぎをたっぷり入れることでコクと甘みが出て、シンプルなのに深みのある味わいに。", ingredients:"牛こま切れ肉、長ねぎ、醤油、みりん", time:"約15分", url:"https://lee.hpplus.jp/recipe/3228492/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"トマトとひき肉の塩はるさめ", desc:"豚ひき肉にんにくしょうがでしっかり旨みを出してトマトと春雨を加えるだけ。春雨がスープを全部吸って食べごたえ満点の一皿に。", ingredients:"豚ひき肉、トマト、春雨、にんにく", time:"約15分", url:"https://esse-online.jp/articles/-/33130", source:"ESSE online（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"フライパンいらずカルボナーラ", desc:"生ハムで旨みをUPさせる、フライパンを使わないカルボナーラ。ゆでたパスタとボウルの中で和えるだけで本格的な濃厚カルボナーラが完成する。", ingredients:"パスタ、生ハム、卵、粉チーズ", time:"約15分", url:"https://lee.hpplus.jp/recipe/3228423/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"ボウルで作るにら玉", desc:"豚バラ肉・にら・卵をボウルの中で混ぜてから炒めるだけのふわとろにら玉。ボウルで混ぜることで卵がふんわり均一に絡まるのがポイント。", ingredients:"豚バラ肉、にら、卵、塩", time:"約10分", url:"https://lee.hpplus.jp/recipe/3228364/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏"], title:"塩チンジャオロースー", desc:"食感が要となるチンジャオロースー。塩だけで仕上げることでピーマンの風味と豚肉の旨みが引き立つ、さっぱりしているのにコクのある一品。", ingredients:"豚ロース、ピーマン、しょうが、塩", time:"約15分", url:"https://lee.hpplus.jp/recipe/3228269/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"豚肉とミズナの辛子あえ", desc:"豚ロースと水菜を辛子でピリッと和えるさっぱりとした一品。酒で蒸した豚肉がやわらかく、水菜のシャキシャキ感と辛子の刺激がアクセントに。", ingredients:"豚ロース、水菜、辛子、酒", time:"約15分", url:"https://esse-online.jp/articles/-/32911", source:"ESSE online（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"あじキムチ丼", desc:"栄養豊富な青魚を手軽にいただける一品。あじとキムチ、玉ねぎをのせるだけの丼で、あじの旨みとキムチの旨辛さが絶妙に合わさる。", ingredients:"あじ（刺し身）、キムチ、玉ねぎ、ご飯", time:"約5分", url:"https://baila.hpplus.jp/lifestyle/recipegourmet/70783", source:"BAILA（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"しょうゆのみ肉豆腐", desc:"甘味は長ねぎから引き出すというシンプル極まりない肉豆腐。醤油だけで仕上げることで素材の旨みが最大限に生きる、日本の家庭料理の真骨頂。", ingredients:"牛こま切れ肉、豆腐、長ねぎ、醤油", time:"約15分", url:"https://lee.hpplus.jp/recipe/3227059/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"失敗知らずのブリ照り焼き", desc:"調味料は最後にからめるだけで失敗しないブリの照り焼き。片栗粉をまぶして焼くことでふっくらジューシーに仕上がる、定番魚料理の決定版。", ingredients:"ぶり、片栗粉、醤油、みりん", time:"約15分", url:"https://lee.hpplus.jp/recipe/3219275/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"煮ないNEWサバのみそ煮", desc:"テクいらずでふっくら仕上がる新しいサバのみそ煮。煮ないという発想の転換で、しっとりとした食感と深みのある味わいが実現する。", ingredients:"塩さば、しょうが、みそ、みりん", time:"約15分", url:"https://lee.hpplus.jp/recipe/3218673/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"ミニマル肉野菜炒め", desc:"ベストな火入れで絶品の仕上がりになる肉野菜炒め。豚ロースを醤油で揉んでキャベツと炒めるシンプルな一品で、火加減ひとつで味が格段に変わる。", ingredients:"豚ロース、キャベツ、しょうが、醤油", time:"約15分", url:"https://lee.hpplus.jp/recipe/3218578/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"塩こしょうのみ唐揚げ", desc:"下味を最小限にした唐揚げ。塩こしょうだけで素材の旨みを引き出すあかりさんらしいレシピ。鶏肉本来の味わいが際立つシンプルで奥深い一品。", ingredients:"鶏もも肉、塩、こしょう、片栗粉", time:"約20分", url:"https://lee.hpplus.jp/recipe/3213393/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏"], title:"サバ缶のビリヤニ風炊き込みごはん", desc:"サバ缶とミニトマトをスパイスで炊き込む手軽なビリヤニ風。サバの旨みとスパイスの香りがご飯に広がって、異国情緒あふれる一皿に。", ingredients:"米、サバ缶、ミニトマト、カレー粉", time:"約40分", url:"https://lee.hpplus.jp/recipe/3064265/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"にんじんとゆで卵のレモンマヨサラダ", desc:"にんじんとゆで卵をレモンマヨで和えるだけのシンプルサラダ。レモンの酸味がマヨネーズをさっぱりさせて、にんじんの甘みを引き立てる。", ingredients:"にんじん、卵、マヨネーズ、レモン", time:"約15分", url:"https://lee.hpplus.jp/recipe/3064275/", source:"LEE（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"カリカリ大根と厚揚げの酢しょうゆ漬け", desc:"大根をカリカリに仕上げて厚揚げと一緒に酢しょうゆに漬けるだけ。食感の違いが楽しく、箸が止まらない作り置きにも最適な副菜。", ingredients:"大根、厚揚げ、醤油、酢", time:"約10分（漬け時間除く）", url:"https://lee.hpplus.jp/recipe/3064278/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"鶏ひき肉とセロリのエスニック炒め", desc:"鶏ひき肉とセロリをにんにくでエスニック風に炒める。セロリの独特の香りとエスニックな調味料が合わさって、ご飯にもビールにも合う一品。", ingredients:"鶏ひき肉、セロリ、にんにく、ナンプラー", time:"約15分", url:"https://lee.hpplus.jp/recipe/2874977/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"豚ひき肉の納豆ピリ辛あんかけうどん", desc:"豚ひき肉とトマト、納豆でピリ辛あんを作ってうどんにかけるだけ。納豆のとろみとトマトの酸味がピリ辛あんにうまく溶け込んだ満足の一杯。", ingredients:"豚ひき肉、トマト、納豆、うどん", time:"約15分", url:"https://lee.hpplus.jp/recipe/2875253/", source:"LEE（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"鶏ひき肉と大根の和風カレー", desc:"鶏ひき肉と大根を和風だしで煮込んだやさしいカレー。大根がカレーの旨みを吸ってとろとろになり、和と洋が見事に融合した一皿。", ingredients:"鶏ひき肉、大根、長ねぎ、カレー粉", time:"約25分", url:"https://lee.hpplus.jp/recipe/2874935/", source:"LEE（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"豚ひき肉の白菜しょうがシチュー", desc:"子どもも食べられるやさしいシチュー。豚ひき肉と白菜をしょうが風味で煮込むと、ルウなしでもとろみが出て体の芯まで温まる冬の定番に。", ingredients:"豚ひき肉、白菜、長ねぎ、しょうが", time:"約25分", url:"https://lee.hpplus.jp/recipe/2868793/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"トマト肉みそ＆中華がゆ", desc:"鶏ひき肉と長ねぎで作るトマト肉みそと、そのゆで汁で作る中華がゆのセット。一度の調理で2品完成する効率のいいレシピ。", ingredients:"鶏ひき肉、トマト、長ねぎ、米", time:"約25分", url:"https://lee.hpplus.jp/recipe/2867810/", source:"LEE（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"高菜と豚バラの鍋", desc:"高菜の旨みと酸味が豚バラとじゃがいもを包む個性的な鍋。高菜の香りがスープ全体に広がって、最後の一滴まで飲み干したくなる冬の鍋料理。", ingredients:"豚バラ肉、じゃがいも、高菜漬け、はんぺん", time:"約20分", url:"https://lee.hpplus.jp/recipe/2848192/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"カニかまと青梗菜の炊き込みごはん", desc:"カニかまと青梗菜をそのまま炊き込む手軽な炊き込みご飯。カニかまから出る旨みと青梗菜の甘みが米に染みわたって、思わずおかわりしたくなる。", ingredients:"米、カニカマ、チンゲン菜、塩", time:"約40分", url:"https://lee.hpplus.jp/recipe/2793424/", source:"LEE（食材・分量はこちら）" },
+  { season:["冬","春"], title:"タラとじゃがいもの洋風炊き込みごはん", desc:"たらとじゃがいもを白ワイン風味で炊き込む洋風炊き込みご飯。たらの旨みとじゃがいものホクホク感が米に染みわたって、ごちそう感あふれる一皿。", ingredients:"米、塩たら、じゃがいも、白ワイン", time:"約40分", url:"https://lee.hpplus.jp/recipe/2793566/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"豚ひき肉と豆腐のふんわり揚げ焼き", desc:"豚ひき肉と豆腐を大葉で包んで揚げ焼きにするふんわりおかず。豆腐のやさしさと大葉のさわやかな香りが合わさった、軽やかな揚げ物。", ingredients:"豚ひき肉、豆腐、大葉、片栗粉", time:"約20分", url:"https://lee.hpplus.jp/recipe/2667614/", source:"LEE（食材・分量はこちら）" },
+  { season:["秋"], title:"豚肉、キムチ、トマトの炊き込みご飯", desc:"キムチとトマトを豚バラ肉と一緒に炊き込む軽やかでジューシーな炊き込みご飯。トマトの酸味とキムチの旨辛さが絶妙にマッチする。", ingredients:"米、豚バラ肉、キムチ、トマト", time:"約40分", url:"https://lee.hpplus.jp/recipe/2782921/", source:"LEE（食材・分量はこちら）" },
+  { season:["秋"], title:"鶏肉とさつまいものわさびバター炊き込みご飯", desc:"鶏肉とさつまいもをわさびバター風味で炊き込む香り豊かな炊き込みご飯。わさびの風味がバターでまろやかになって、さつまいもの甘みと絶妙に合わさる。", ingredients:"米、鶏もも肉、さつまいも、バター", time:"約40分", url:"https://lee.hpplus.jp/recipe/2781389/", source:"LEE（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"鶏ひき肉とオクラの柚子こしょうクリームパスタ", desc:"鶏ひき肉とオクラをゆずこしょうとクリームでまとめるパスタ。ゆずこしょうのさわやかな辛みとクリームのまろやかさが絶妙で、オクラのとろみが全体をまとめる。", ingredients:"パスタ、鶏ひき肉、オクラ、ゆずこしょう", time:"約20分", url:"https://lee.hpplus.jp/recipe/2667880/", source:"LEE（食材・分量はこちら）" },
+  { season:["夏","秋"], title:"豚ひき肉となすのとろけるハーブ煮込み", desc:"豚ひき肉となすをミニトマトとハーブで煮込む南欧風の一皿。なすがとろけるほど煮込まれて、豚ひき肉の旨みをたっぷり吸い込んだごちそう煮込み。", ingredients:"豚ひき肉、なす、ミニトマト、バジル", time:"約25分", url:"https://lee.hpplus.jp/recipe/2667659/", source:"LEE（食材・分量はこちら）" },
+  { season:["夏"], title:"豚ひき肉とズッキーニの梅クミン蒸し", desc:"ズッキーニと豚ひき肉を梅とクミンで蒸す意外な組み合わせ。梅の酸味とクミンのエスニックな香りが豚ひき肉とズッキーニを新鮮な味わいにする。", ingredients:"豚ひき肉、ズッキーニ、梅干し、クミン", time:"約20分", url:"https://lee.hpplus.jp/recipe/2667672/", source:"LEE（食材・分量はこちら）" },
+  { season:["夏"], title:"鶏ひき肉とトウモロコシのバターじょうゆピラフ", desc:"鶏ひき肉ととうもろこしをバター醤油で炊き込むピラフ。とうもろこしの甘みとバター醤油の香ばしさが合わさって、子どもから大人まで喜ぶ夏のご飯。", ingredients:"米、鶏ひき肉、とうもろこし、バター", time:"約40分", url:"https://lee.hpplus.jp/recipe/2667774/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"春菊とノリのケランチム", desc:"韓国の家庭料理ケランチムを春菊とノリで和風にアレンジ。フライパンで手軽に作れるふんわりとした食感が心地よい卵料理。", ingredients:"卵、春菊、海苔、豚ひき肉", time:"約15分", url:"https://lee.hpplus.jp/recipe/2874893/", source:"LEE（食材・分量はこちら）" },
+  { season:["夏","秋"], title:"油揚げと小松菜のカレー", desc:"油揚げから出る旨みで、肉や魚なしでも深みのあるカレーに。短時間で完成するヘルシーカレーで、小松菜の栄養もたっぷり摂れる。", ingredients:"油揚げ、小松菜、しょうが、カレー粉", time:"約20分", url:"https://lee.hpplus.jp/recipe/2979619/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"鶏ひき肉とかぶのスープ", desc:"鶏ひき肉とかぶをパセリで仕上げるやさしいスープ。かぶのとろりとした食感と鶏ひき肉の旨みが合わさって、体にやさしいほっこりした一椀。", ingredients:"鶏ひき肉、かぶ、パセリ、塩", time:"約15分", url:"https://lee.hpplus.jp/recipe/2874631/", source:"LEE（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"鶏と春菊のわさびバター炊き込みごはん", desc:"鶏もも肉と春菊をわさびバターで炊き込む香り豊かな炊き込みご飯。わさびがバターでまろやかになって、春菊の香りと絶妙に合わさる秋冬のごちそう。", ingredients:"米、鶏もも肉、春菊、バター", time:"約40分", url:"https://lee.hpplus.jp/recipe/3050105/", source:"LEE（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"ツナと大根おろしの黒ゴマスープ", desc:"ツナと大根おろしを黒ごまで仕上げるスープ。大根おろしのとろみとツナの旨みが黒ごまの香りと合わさって、体にやさしくて美肌にも良い一椀。", ingredients:"ツナ缶、大根、黒ごま、塩", time:"約10分", url:"https://esse-online.jp/articles/-/31503", source:"ESSE online（食材・分量はこちら）" },
+  { season:["夏","秋"], title:"シャケの湯煮 たくあんタルタル", desc:"鮭の湯煮にたくあんを刻んだタルタルソースをかける、クセになるおいしさの一品。たくあんのコリコリ食感とマヨネーズのコクが湯煮の鮭と絶妙に合う。", ingredients:"鮭、たくあん、マヨネーズ、醤油", time:"約15分", url:"https://lee.hpplus.jp/recipe/2992802/", source:"LEE（食材・分量はこちら）" },
+  { season:["夏","秋"], title:"ささ身とにんじんの梅おかかスープ", desc:"鶏ささみとにんじんを梅とおかかで仕上げるシャキシャキ食感のスープ。梅の酸味とおかかの旨みが合わさって、さっぱりしているのに深みのある一椀。", ingredients:"鶏ささみ、にんじん、梅干し、鰹節", time:"約15分", url:"https://lee.hpplus.jp/recipe/2987452/", source:"LEE（食材・分量はこちら）" },
+  { season:["夏"], title:"卵ふとんかけごはん", desc:"卵でふんわり包み込むご飯。ハムと醤油ベースのシンプルな味つけで、卵がご飯にかかったビジュアルも愛らしく、忙しい日のご飯にも最適。", ingredients:"卵、ハム、醤油", time:"約10分", url:"https://lee.hpplus.jp/recipe/2992215/", source:"LEE（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"のりの韓国風佃煮", desc:"海苔を砂糖・醤油でじっくり煮た韓国風佃煮。ご飯のお供にも、おつまみにも最高で、作っておくと何かと便利な常備菜。", ingredients:"海苔、砂糖、醤油", time:"約15分", url:"https://esse-online.jp/articles/-/29298", source:"ESSE online（食材・分量はこちら）" },
+  // エノテカ
+  { season:["冬"], title:"鱈のふわとろオムレツ", desc:"たらを白ワインでほぐしてオムレツに包む、ワインに合うごちそうオムレツ。ふわとろの卵生地にたらの旨みがとけ込んで、一口で感動する一品。", ingredients:"塩たら、卵、白ワイン、塩", time:"約15分", url:"https://www.enoteca.co.jp/article/archives/20240904081851871/", source:"エノテカ（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"しめ鯖と新しょうがの炒め物", desc:"しめ鯖をしょうがとバターで炒めるという新発想。さっぱりしていると思いきや、バターのコクとしょうがの香りがしめ鯖の旨みを引き立てる。", ingredients:"しめさば、しょうが、バター", time:"約10分", url:"https://www.enoteca.co.jp/article/archives/20240704082037057/", source:"エノテカ（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"ナッツとクミン香るクリームチーズおにぎり", desc:"ナッツとクミンとクリームチーズを混ぜたおにぎりは、異国情緒あふれる香りとクリーミーな味わいが癖になる。だらだらしたい日のお供に。", ingredients:"米、ナッツ、クリームチーズ、クミン", time:"約10分", url:"https://www.enoteca.co.jp/article/archives/20241002084442118/", source:"エノテカ（食材・分量はこちら）" },
+  { season:["夏"], title:"ソフトさきいかとトマトのパスタ", desc:"忙しい日もこれで決まる一皿。さきいかのうま味がトマトとにんにくに溶け込んで、驚くほど深みのあるパスタに仕上がる時短レシピ。", ingredients:"パスタ、さきいか、トマト、にんにく", time:"約15分", url:"https://www.enoteca.co.jp/article/archives/20240801154337542/", source:"エノテカ（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"アボカドとサーモンのオープンオムレツ", desc:"アボカドとサーモンの組み合わせが上品なオープンオムレツ。卵でふんわり包んで焼くだけで映えるごちそう感が出る、ワインに合う一品。", ingredients:"卵、サーモン、アボカド、塩", time:"約15分", url:"https://www.enoteca.co.jp/article/archives/20251007153727596/", source:"エノテカ（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"ささみと切り干し大根のヘルシー黒酢和え", desc:"夜ふかしでも安心のヘルシーおつまみ。鶏ささみと切り干し大根を黒酢で和えるだけで、さっぱりしているのにコクのある一品に仕上がる。", ingredients:"鶏ささみ、切り干し大根、黒酢、三つ葉", time:"約15分", url:"https://www.enoteca.co.jp/article/archives/20241107151751222/", source:"エノテカ（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"鶏ささみのふんわりから揚げ", desc:"卵でつなぐことでふんわりした食感に仕上がる鶏ささみのから揚げ。ジューシーなのにさっぱり食べられる、ワインにも合う上品な揚げ物。", ingredients:"鶏ささみ、醤油、卵、片栗粉", time:"約20分", url:"https://www.enoteca.co.jp/article/archives/20250423095545858/", source:"エノテカ（食材・分量はこちら）" },
+  { season:["夏"], title:"夏野菜と大豆のバジルカレー", desc:"なすとトマトと大豆をバジルと一緒に煮込む、肉なしでも満足度の高いヘルシーなベジカレー。ロゼワインに合う夏のカレー。", ingredients:"なす、トマト、大豆、バジル", time:"約25分", url:"https://www.enoteca.co.jp/article/archives/20250813083209108/", source:"エノテカ（食材・分量はこちら）" },
+  // キッコーマン
+  { season:["春","夏","秋","冬"], title:"豚バラ肉と油揚げ、玉ねぎのしょうゆカレー", desc:"豚バラ肉と油揚げと玉ねぎを醤油ベースで仕上げるカレー。油揚げが旨みを吸って食べごたえを増し、醤油のコクが深みをプラスする和風カレー。", ingredients:"豚バラ肉、油揚げ、玉ねぎ、カレー粉", time:"約20分", url:"https://www.kikkoman.co.jp/homecook/search/recipe/00058235/", source:"キッコーマン（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"豚肉とズッキーニのミルフィーユオムレツ", desc:"豚バラ肉とズッキーニを層にして卵で包む豪快なオムレツ。ミルフィーユ状の断面が美しく、ズッキーニのみずみずしさと豚肉のコクが絶妙。", ingredients:"卵、ズッキーニ、豚バラ肉、塩", time:"約20分", url:"https://www.kikkoman.co.jp/homecook/search/recipe/00055416/", source:"キッコーマン（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"れんこんのしぼ生漬け", desc:"味つけは生しょうゆだけというシンプル極まりない漬け物。れんこんのシャキシャキ食感と醤油の旨みだけで、いくらでも食べられる箸休め。", ingredients:"れんこん、醤油、酢", time:"約5分（漬け時間除く）", url:"https://www.kikkoman.co.jp/homecook/search/recipe/00056196/", source:"キッコーマン（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"キャベツのオリーブ＆粉チーズスープ", desc:"キャベツをオリーブオイルと粉チーズで仕上げるシンプルなスープ。チーズの旨みがキャベツの甘みを引き立てて、シンプルなのに深みのある一椀。", ingredients:"キャベツ、オリーブオイル、粉チーズ、塩", time:"約15分", url:"https://www.kikkoman.co.jp/homecook/search/recipe/00056645/", source:"キッコーマン（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"小松菜とツナの食べるしょうゆスープ", desc:"小松菜とツナ缶をにんにく風味の醤油スープで仕上げる一品。ツナのうまみが溶け込んだスープはそのまま飲み干したくなるおいしさ。", ingredients:"小松菜、ツナ缶、にんにく、醤油", time:"約10分", url:"https://www.kikkoman.co.jp/homecook/search/recipe/00058239/", source:"キッコーマン（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"ごぼうのオリーブオイルスープ", desc:"ごぼうをオリーブオイルで炒めて塩だけで仕上げるシンプルなスープ。ごぼうの香りとオリーブオイルの風味が引き立つ、体にやさしい一椀。", ingredients:"ごぼう、オリーブオイル、塩", time:"約15分", url:"https://www.kikkoman.co.jp/homecook/search/recipe/00056195/", source:"キッコーマン（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"しらすとねぎ入りあんかけオムレツ", desc:"しらすと万能ねぎを入れたオムレツに醤油あんをかける和風オムレツ。しらすの旨みとふんわりした卵にとろりとしたあんが絡んで絶品。", ingredients:"卵、しらす、万能ねぎ、醤油", time:"約15分", url:"https://www.kikkoman.co.jp/homecook/search/recipe/00056194/", source:"キッコーマン（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"豆乳とすりごまのスープ", desc:"わかめと豆乳とすりごまを合わせたやさしいスープ。豆乳のまろやかさとすりごまの香ばしさが合わさって、体の内側からほっとする一椀。", ingredients:"わかめ、豆乳、すりごま、塩", time:"約10分", url:"https://www.kikkoman.co.jp/homecook/search/recipe/00055417/", source:"キッコーマン（食材・分量はこちら）" },
+  { season:["春"], title:"春にんじんの梅しょうゆみりん蒸し", desc:"春にんじんを梅としょうゆとみりんで蒸すだけ。春にんじんの甘みと梅の酸味がごま油の香りとともに広がる、シンプルで滋味深い副菜。", ingredients:"にんじん、梅干し、ごま油、みりん", time:"約15分", url:"https://www.kikkoman.co.jp/homecook/search/recipe/00058238/", source:"キッコーマン（食材・分量はこちら）" },
+  { season:["夏"], title:"玉ねぎと青じそのしぼ生漬け", desc:"玉ねぎを大葉と一緒に醤油だけで漬けるシンプルな漬け物。玉ねぎの甘みと大葉のさわやかな香りが醤油で引き立つ、夏の定番副菜。", ingredients:"玉ねぎ、大葉、醤油", time:"約5分（漬け時間除く）", url:"https://www.kikkoman.co.jp/homecook/search/recipe/00055418/", source:"キッコーマン（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"鶏肉のトマト照り焼き", desc:"鶏もも肉をミニトマトと一緒に照り焼きにする一品。トマトの酸味が照り焼きのたれに溶け込んで、さっぱりしているのにコクのあるたれに仕上がる。", ingredients:"鶏もも肉、ミニトマト、醤油、みりん", time:"約20分", url:"https://www.kikkoman.co.jp/homecook/search/recipe/00055415/", source:"キッコーマン（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"しょうゆポテトサラダ", desc:"味つけは生しょうゆだけのポテトサラダ。ブロッコリーとクリームチーズを加えることでリッチな味わいに。マヨネーズなしでもこんなにおいしい一品。", ingredients:"じゃがいも、ブロッコリー、クリームチーズ、醤油", time:"約20分", url:"https://www.kikkoman.co.jp/homecook/search/recipe/00056644/", source:"キッコーマン（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"白菜餃子", desc:"白菜を主役にしたヘルシーな餃子。白菜の水分を活かしてジューシーに仕上げる。塩もみなしで手軽に作れて、皮がパリッと中がジューシーな一品。", ingredients:"白菜、鶏ひき肉、片栗粉、ごま油", time:"約30分", url:"https://www.kikkoman.co.jp/homecook/search/recipe/00058356/", source:"キッコーマン（食材・分量はこちら）" },
+  // オレンジページ追加分
+  { season:["春","夏","秋","冬"], title:"ポークカレー ルウなしカレー粉で", desc:"豚バラ肉と玉ねぎとにんじんをカレー粉だけで仕上げる軽やかなカレー。ルウを使わないからさらっとしているのに旨みが濃く、毎日食べても飽きない。", ingredients:"豚バラ肉、玉ねぎ、にんじん、カレー粉", time:"約30分", url:"https://www.orangepage.net/food/series-food/akarikihon/219044", source:"オレンジページ（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"令和の豚しゃぶ鍋", desc:"具は豚ロースと鰹節だけ、だし不要の究極シンプル鍋。豚肉の旨みと鰹節の出汁だけで成立する、引き算の美学が光るあかりさんらしい鍋。", ingredients:"豚ロース、鰹節、醤油", time:"約15分", url:"https://www.orangepage.net/food/series-food/akarikihon/208394", source:"オレンジページ（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"塩味チンジャオロースー", desc:"味つけは塩だけというシンプルなチンジャオロースー。ピーマンの苦みと豚肉の旨みが塩の引き算で際立つ、あかりさんらしいミニマルな一品。", ingredients:"ピーマン、豚ロース、しょうが、塩", time:"約15分", url:"https://www.orangepage.net/food/series-food/akarikihon/159391", source:"オレンジページ（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"シンプル五宝菜", desc:"油なし・炒めないという発想の五宝菜。豚バラ肉と白菜とピーマンを蒸し煮にするだけで、具材の旨みが絡み合う本格的な中華丼の具が完成。", ingredients:"豚バラ肉、白菜、ピーマン、片栗粉", time:"約20分", url:"https://www.orangepage.net/food/series-food/akarikihon/223773", source:"オレンジページ（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"手羽中とごぼうのパエリア風", desc:"手羽中とごぼうをフライパンで炊き込むパエリア風ご飯。手羽中から出る旨みとごぼうの香りが米に染みわたって、スペイン風の豪快な一皿に。", ingredients:"米、手羽中、ごぼう、にんにく", time:"約35分", url:"https://lee.hpplus.jp/recipe/2793192/", source:"LEE（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"丸ごとれんこんの炊き込みごはん みそダレ添え", desc:"れんこんを丸ごと炊き込む豪快な炊き込みご飯。スペアリブや手羽中の旨みがご飯に広がり、みそダレをかけながら食べる冬のごちそう。", ingredients:"米、れんこん、スペアリブ、みそ", time:"約45分", url:"https://lee.hpplus.jp/recipe/3064254/", source:"LEE（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"目玉焼きみそ汁", desc:"フライパンで作る目玉焼きをそのままみそ汁に入れる斬新な一品。卵の旨みがスープに溶け込んで、具としてもビジュアルとしても最高の一椀。", ingredients:"卵、長ねぎ、鰹節、みそ", time:"約10分", url:"https://lee.hpplus.jp/recipe/3062625/", source:"LEE（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"豚肉と塩昆布の炊き込みごはん", desc:"豚ロースと塩昆布と山芋を一緒に炊き込むご飯。塩昆布の旨みが豚肉と山芋に染みわたって、山芋のホクホク感と絶妙なバランスの炊き込みご飯。", ingredients:"米、豚ロース、山芋、塩昆布", time:"約40分", url:"https://lee.hpplus.jp/recipe/3064259/", source:"LEE（食材・分量はこちら）" },
+  { season:["冬","春"], title:"白菜だけのクリームスープ", desc:"白菜だけで作るシンプルなクリームスープ。白菜の甘みだけで驚くほど旨みが出て、生クリームと合わさったとろりとしたスープが体を温める。", ingredients:"白菜、生クリーム、小麦粉、塩", time:"約20分", url:"https://lee.hpplus.jp/recipe/3064251/", source:"LEE（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"鮭、にんじん、梅干し、おかかの炊き込みごはん", desc:"鮭・にんじん・梅干し・おかかの4つを炊き込む栄養バランス抜群の炊き込みご飯。梅の酸味とおかかの旨みがご飯全体に広がって体が喜ぶ一皿。", ingredients:"米、鮭、にんじん、梅干し", time:"約40分", url:"https://lee.hpplus.jp/recipe/2793269/", source:"LEE（食材・分量はこちら）" },
+  // 日の出みりん
+  { season:["夏","秋"], title:"夏野菜と鯵のミネストローネ", desc:"トマト・ズッキーニ・玉ねぎと鯵を合わせた夏のミネストローネ。鯵のうまみが野菜のスープにとけ込んで、魚介と野菜の旨みが重なる夏のごちそうスープ。", ingredients:"あじ、トマト、ズッキーニ、玉ねぎ", time:"約25分", url:"https://hinode-mirin.co.jp/recipe/itsumono/2025/06/14392/", source:"日の出みりん（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"ちぎり厚揚げの酒蒸し 小ネギ柚子胡椒だれ", desc:"厚揚げをちぎって酒蒸しにして柚子こしょうだれをかけるだけ。ちぎることで表面積が増して味がよく染みる、シンプルだけど奥深い一品。", ingredients:"厚揚げ、酒、万能ねぎ、ゆずこしょう", time:"約10分", url:"https://hinode-mirin.co.jp/recipe/itsumono/2024/07/12434/", source:"日の出みりん（食材・分量はこちら）" },
+  { season:["夏"], title:"チキンとミニトマトの酒蒸し", desc:"鶏もも肉とミニトマトを酒で蒸すだけの時短レシピ。トマトのうまみと酸味が鶏肉にしみわたって、さっぱりしているのに満足感のある一皿。", ingredients:"鶏もも肉、ミニトマト、塩、酒", time:"約15分", url:"https://hinode-mirin.co.jp/recipe/itsumono/2024/07/12488/", source:"日の出みりん（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"豚肉と小松菜の梅煮込み", desc:"豚肉と小松菜を梅干しでさっぱりと煮込む一品。梅の酸味が豚肉のコクを爽やかに引き立てて、小松菜の栄養もしっかり摂れるヘルシー煮込み。", ingredients:"豚肉、小松菜、梅干し、片栗粉", time:"約15分", url:"https://hinode-mirin.co.jp/recipe/itsumono/2024/06/12482/", source:"日の出みりん（食材・分量はこちら）" },
+  { season:["秋","冬"], title:"根菜の酒蒸しサラダ", desc:"ごぼう・れんこん・山芋を酒蒸しにして温かいサラダに。根菜の自然な甘みと食感が酒蒸しでほっくりやわらかくなって、体の中から温まる一品。", ingredients:"ごぼう、れんこん、山芋", time:"約20分", url:"https://hinode-mirin.co.jp/recipe/itsumono/2024/06/12491/", source:"日の出みりん（食材・分量はこちら）" },
+  { season:["冬"], title:"白菜と豚バラの酒蒸しラーメン", desc:"白菜と豚バラ肉を酒蒸しにしてそのままラーメンに仕上げる一品。素材のうまみだけで作るシンプルなスープが体に染みわたる、冬の定番麺料理。", ingredients:"中華麺、豚バラ肉、白菜", time:"約20分", url:"https://hinode-mirin.co.jp/recipe/itsumono/2024/06/12419/", source:"日の出みりん（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"ささみともやしの料理酒炒め", desc:"鶏ささみともやしを料理酒だけで炒めるシンプル極まりない一品。素材の旨みだけで成立するヘルシーな炒め物で、ダイエット中にも重宝する。", ingredients:"鶏ささみ、もやし、片栗粉", time:"約10分", url:"https://hinode-mirin.co.jp/recipe/itsumono/2024/06/12445/", source:"日の出みりん（食材・分量はこちら）" },
+  { season:["冬","春"], title:"鱈の酒蒸し あつあつごま油がけ", desc:"たらを酒蒸しにしてあつあつのごま油をかけるシンプルな魚料理。ごま油の香りが一気にたらの旨みを引き立てて、食卓がぱっと華やぐ一品。", ingredients:"塩たら、酒", time:"約15分", url:"https://hinode-mirin.co.jp/recipe/itsumono/2024/06/12485/", source:"日の出みりん（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"塩そぼろ丼", desc:"鶏ひき肉としょうがを塩と酒で炒めるシンプルなそぼろをご飯にのせるだけ。余計なものを一切入れない潔さで鶏の旨みが際立つ、毎日でも食べたい丼。", ingredients:"鶏ひき肉、しょうが、酒、塩", time:"約10分", url:"https://hinode-mirin.co.jp/recipe/itsumono/2024/06/12494/", source:"日の出みりん（食材・分量はこちら）" },
+  { season:["春","夏","秋","冬"], title:"鶏ひき肉とレモンのリゾット", desc:"鶏ひき肉とレモンをにんにくとオリーブオイルで仕上げるリゾット。レモンのさわやかさと鶏ひき肉の旨みがご飯に染みわたる、イタリアンな一皿。", ingredients:"米、鶏ひき肉、レモン、にんにく", time:"約25分", url:"https://hinode-mirin.co.jp/recipe/itsumono/2024/06/12479/", source:"日の出みりん（食材・分量はこちら）" },
+  { season:["夏","秋"], title:"うなぎと薬味のあたたかい蕎麦", desc:"うなぎと大葉・みょうがなどの薬味をたっぷりのせた温かい蕎麦。薬味のさわやかさがうなぎの濃厚な旨みを引き立てて、贅沢な気分になれる一杯。", ingredients:"そば、うなぎ、大葉、みょうが", time:"約15分", url:"https://hinode-mirin.co.jp/recipe/itsumono/2025/07/14459/", source:"日の出みりん（食材・分量はこちら）" },
+  { season:["夏"], title:"そうめん パセリとしらすのアレンジ", desc:"パセリの香りとしらすのうまみがマッチするそうめんアレンジ。いつものそうめんをパセリとしらすで格上げする、夏にぴったりのさっぱり麺料理。", ingredients:"そうめん、パセリ、しらす", time:"約10分", url:"https://esse-online.jp/articles/-/33563", source:"ESSE online（食材・分量はこちら）" },
+
+
+  // ===== えびレシピ（貝アレルギーだがえびはOK）=====
+  { season:["春","夏"], title:"ミニトマトでフレッシュエビチリ", desc:"さらりと軽やかなエビチリ。ミニトマトをフレッシュなまま使うことでソースが重たくならず、えびのプリプリ感が際立つ。辛みはお好みで調整して。", ingredients:"えび、ミニトマト、長ねぎ、にんにく", time:"約15分", url:"https://lee.hpplus.jp/recipe/3228122/", source:"LEE（食材・分量はこちら）" },
+  { season:["夏"], title:"白菜とエビのショウガ塩炒め", desc:"白菜とえびをしょうがと塩だけでシンプルに炒める一品。えびの旨みと白菜の甘み、しょうがの香りが絶妙に合わさるさっぱりした炒め物。", ingredients:"白菜、えび、しょうが、片栗粉", time:"約10分", url:"https://esse-online.jp/articles/-/30706", source:"ESSE online（食材・分量はこちら）" },
 ];
 
 function getSeason() {
